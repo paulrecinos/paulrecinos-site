@@ -1,0 +1,13 @@
+# Redirections 301 - anciennes URLs Wix vers nouveau site
+
+/la-methode                       /     301
+/coach-sportif-neuilly-seine      /     301
+/contact                          /     301
+/about                            /     301
+/services                         /     301
+/home                             /     301
+/blog                             /     301
+/methode                          /     301
+/la-methode/                      /     301
+/coach-sportif-neuilly-seine/     /     301
+/contact/                         /     301
