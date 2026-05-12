@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Méthode Longévité — Accompagnement 90 jours avec Paul Recinos</title>
+<meta name="description" content="90 jours d'accompagnement personnel avec Paul Recinos (Polito). Sport, mental, alimentation. 13 min/jour. 3,30€/jour.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --magenta: #E91E8C;
+  --magenta-fonce: #B01670;
+  --hot-pink: #FF4DA6;
+  --orange: #F5855A;
+  --noir: #0a0a10;
+  --dore: #C8A84B;
+  --dore-clair: #E5C870;
+  --lavande: #EDE7F6;
+  --blanc: #ffffff;
+  --gris-doux: #f8f5f7;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--noir);
+  background: var(--blanc);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+/* NAV */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--magenta);
+  padding: 1rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 4px 30px rgba(233, 30, 140, 0.2);
+}
+.nav-logo { display: flex; align-items: center; gap: 0.8rem; }
+.nav-logo-circle {
+  width: 50px; height: 50px; border-radius: 50%;
+  background: var(--noir);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--blanc);
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem;
+  border: 2px solid var(--blanc);
+}
+.nav-logo-text { color: var(--blanc); }
+.nav-logo-text .name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem; letter-spacing: 0.05em;
+}
+.nav-logo-text .subtitle { font-size: 0.75rem; font-style: italic; opacity: 0.9; }
+.nav-back {
+  background: var(--blanc); color: var(--magenta);
+  padding: 0.7rem 1.5rem; border-radius: 50px; text-decoration: none;
+  font-family: 'Bebas Neue', sans-serif; font-size: 0.95rem; letter-spacing: 0.08em;
+  transition: transform 0.3s ease;
+}
+.nav-back:hover { transform: translateY(-2px); }
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--magenta) 0%, var(--hot-pink) 50%, var(--orange) 100%);
+  color: var(--blanc);
+  padding: 6rem 2rem 8rem;
+  position: relative; overflow: hidden; text-align: center;
+}
+.hero::before {
+  content: ''; position: absolute;
+  top: -50%; left: -10%; width: 60%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: ''; position: absolute;
+  bottom: -30%; right: -10%; width: 50%; height: 100%;
+  background: radial-gradient(circle, rgba(200, 168, 75, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.6rem 1.5rem; border-radius: 50px;
+  font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.15em; font-size: 0.95rem;
+  margin-bottom: 2rem; position: relative; z-index: 1;
+}
+.hero h1 {
+  font-size: clamp(4rem, 12vw, 9rem);
+  color: var(--blanc); margin-bottom: 1rem;
+  position: relative; z-index: 1;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.15);
+}
+.hero-subtitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  letter-spacing: 0.1em; margin-bottom: 2rem; opacity: 0.95;
+  position: relative; z-index: 1;
+}
+.hero-promise {
+  max-width: 700px; margin: 0 auto 3rem;
+  font-size: 1.15rem; font-weight: 500;
+  position: relative; z-index: 1; line-height: 1.7;
+}
+.hero-promise strong {
+  font-weight: 700;
+  border-bottom: 3px solid var(--dore);
+  padding-bottom: 2px;
+}
+.btn-cta {
+  display: inline-block;
+  background: var(--blanc); color: var(--magenta);
+  padding: 1.3rem 3rem;
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.08em;
+  text-decoration: none; border-radius: 60px;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  position: relative; z-index: 1;
+}
+.btn-cta:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+}
+.hero-price {
+  margin-top: 1.5rem; font-size: 1rem; opacity: 0.9;
+  position: relative; z-index: 1;
+}
+
+/* SECTIONS */
+.section { padding: 6rem 2rem; }
+.container { max-width: 1100px; margin: 0 auto; }
+.for-whom { background: var(--gris-doux); }
+.section-label {
+  font-family: 'Bebas Neue', sans-serif;
+  color: var(--magenta);
+  letter-spacing: 0.2em; font-size: 1rem;
+  margin-bottom: 1rem; display: block;
+}
+.section h2 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--noir); margin-bottom: 2rem; line-height: 1;
+}
+.section h2 .accent { color: var(--magenta); }
+.for-whom p {
+  font-size: 1.15rem; margin-bottom: 1.5rem; max-width: 700px;
+}
+.for-whom .highlight {
+  background: var(--lavande);
+  padding: 0.2rem 0.5rem; font-weight: 600;
+}
+.for-whom .punchline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  color: var(--magenta);
+  margin-top: 2rem; line-height: 1.1; max-width: 750px;
+}
+
+/* MES CLIENTS */
+.clients {
+  background: var(--noir); color: var(--blanc);
+  position: relative; overflow: hidden;
+}
+.clients::before {
+  content: 'CLIENTS';
+  position: absolute;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22rem;
+  color: rgba(233, 30, 140, 0.06);
+  top: 50%; right: -5%;
+  transform: translateY(-50%);
+  pointer-events: none; line-height: 1; letter-spacing: 0.05em;
+}
+.clients .section-label { color: var(--hot-pink); }
+.clients h2 { color: var(--blanc); }
+.clients h2 .accent { color: var(--hot-pink); }
+.clients-intro {
+  font-size: 1.15rem; margin-bottom: 2rem;
+  position: relative; z-index: 1;
+  max-width: 700px; line-height: 1.7;
+}
+.client-list {
+  list-style: none; margin: 2rem 0;
+  position: relative; z-index: 1;
+}
+.client-list li {
+  padding: 1.2rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 1.05rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.client-list li::before {
+  content: ''; width: 8px; height: 8px;
+  background: var(--dore); border-radius: 50%;
+  flex-shrink: 0;
+}
+.client-list .client-name {
+  font-weight: 700; color: var(--dore);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem; letter-spacing: 0.05em;
+}
+.client-list .client-role { opacity: 0.8; font-size: 0.95rem; }
+.clients-punchline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--hot-pink);
+  margin-top: 3rem; line-height: 1;
+  position: relative; z-index: 1;
+}
+
+/* PROGRAMME 13 MIN */
+.program {
+  background: linear-gradient(180deg, var(--blanc) 0%, var(--lavande) 100%);
+}
+.time-display { text-align: center; margin: 3rem 0 4rem; }
+.time-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(8rem, 20vw, 16rem);
+  color: var(--magenta); line-height: 0.85;
+  text-shadow: 0 6px 0 var(--orange);
+  letter-spacing: -0.02em;
+}
+.time-unit {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--noir); letter-spacing: 0.15em;
+  margin-top: 0.5rem;
+}
+.time-detail {
+  font-size: 1rem; color: var(--noir); opacity: 0.7;
+  margin-top: 1rem; font-style: italic;
+}
+.program-blocks {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2rem; margin-top: 3rem;
+}
+@media (max-width: 768px) { .program-blocks { grid-template-columns: 1fr; } }
+.block {
+  background: var(--blanc); padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(233, 30, 140, 0.08);
+  border-top: 6px solid var(--magenta);
+  transition: transform 0.3s ease;
+}
+.block:hover { transform: translateY(-5px); }
+.block.alt { border-top-color: var(--orange); }
+.block-icon {
+  width: 60px; height: 60px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--magenta) 0%, var(--orange) 100%);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.5rem; position: relative;
+}
+.block-icon::after {
+  content: '';
+  width: 28px; height: 28px;
+  background: var(--blanc);
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M13 3a9 9 0 1 0 9 9' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'/><circle cx='12' cy='12' r='2.5' fill='black'/></svg>") center/contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M13 3a9 9 0 1 0 9 9' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'/><circle cx='12' cy='12' r='2.5' fill='black'/></svg>") center/contain no-repeat;
+}
+.block.alt .block-icon::after {
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='3' y='5' width='18' height='3' rx='1.5' fill='black'/><rect x='3' y='10.5' width='14' height='3' rx='1.5' fill='black'/><rect x='3' y='16' width='10' height='3' rx='1.5' fill='black'/></svg>") center/contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='3' y='5' width='18' height='3' rx='1.5' fill='black'/><rect x='3' y='10.5' width='14' height='3' rx='1.5' fill='black'/><rect x='3' y='16' width='10' height='3' rx='1.5' fill='black'/></svg>") center/contain no-repeat;
+}
+.block h3 {
+  font-size: 2rem; margin-bottom: 0.5rem;
+  color: var(--magenta);
+}
+.block.alt h3 { color: var(--orange); }
+.block-duration {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem; letter-spacing: 0.1em;
+  color: var(--noir); opacity: 0.6; margin-bottom: 1rem;
+}
+.block p { font-size: 1rem; line-height: 1.7; margin-bottom: 1rem; }
+.choice-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1rem; margin-top: 1rem;
+}
+.choice {
+  background: var(--lavande); padding: 1rem;
+  border-radius: 12px; text-align: center;
+}
+.choice-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem; color: var(--magenta);
+  letter-spacing: 0.05em; margin-bottom: 0.3rem;
+}
+.choice-desc { font-size: 0.9rem; opacity: 0.8; }
+
+/* MODULES */
+.modules { background: var(--noir); color: var(--blanc); }
+.modules .section-label { color: var(--hot-pink); }
+.modules h2 { color: var(--blanc); }
+.modules h2 .accent { color: var(--hot-pink); }
+.modules-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2rem; margin-top: 3rem;
+}
+@media (max-width: 768px) { .modules-grid { grid-template-columns: 1fr; } }
+.module {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 2.5rem 2rem; border-radius: 20px;
+  position: relative; transition: all 0.3s ease;
+}
+.module:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-5px);
+}
+.module-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem; line-height: 0.8;
+  color: var(--hot-pink); margin-bottom: 1rem;
+}
+.module h3 {
+  font-size: 1.8rem; margin-bottom: 1rem; color: var(--blanc);
+}
+.module-period {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.1em; color: var(--dore);
+  font-size: 0.95rem; margin-bottom: 1rem;
+}
+.module p {
+  font-size: 0.95rem; line-height: 1.6;
+  opacity: 0.85; margin-bottom: 1rem;
+}
+.module-count {
+  font-family: 'Bebas Neue', sans-serif;
+  color: var(--hot-pink); letter-spacing: 0.05em;
+  font-size: 1rem; margin-top: 1rem;
+}
+
+/* COACHING */
+.coaching { background: var(--gris-doux); }
+.coaching-channels {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2rem; margin-top: 3rem;
+}
+@media (max-width: 768px) { .coaching-channels { grid-template-columns: 1fr; } }
+.channel {
+  background: var(--blanc); padding: 2.5rem 2rem;
+  border-radius: 20px; text-align: center;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+}
+.channel-icon {
+  width: 70px; height: 70px; border-radius: 18px;
+  background: linear-gradient(135deg, var(--magenta) 0%, var(--orange) 100%);
+  margin: 0 auto 1.5rem;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.channel-icon::after {
+  content: ''; width: 32px; height: 32px;
+  background: var(--blanc);
+}
+.channel-icon.telegram::after {
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M21.5 4.5 18 19.5l-5-3.5-3 3v-4l9-9-11 7-5-1.5L21.5 4.5z' fill='black'/></svg>") center/contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M21.5 4.5 18 19.5l-5-3.5-3 3v-4l9-9-11 7-5-1.5L21.5 4.5z' fill='black'/></svg>") center/contain no-repeat;
+}
+.channel-icon.community::after {
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='8' cy='9' r='3' fill='black'/><circle cx='16' cy='9' r='3' fill='black'/><path d='M3 19c0-3 2-5 5-5s5 2 5 5v1H3v-1zM11 19c0-3 2-5 5-5s5 2 5 5v1H11v-1z' fill='black'/></svg>") center/contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='8' cy='9' r='3' fill='black'/><circle cx='16' cy='9' r='3' fill='black'/><path d='M3 19c0-3 2-5 5-5s5 2 5 5v1H3v-1zM11 19c0-3 2-5 5-5s5 2 5 5v1H11v-1z' fill='black'/></svg>") center/contain no-repeat;
+}
+.channel-icon.app::after {
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='6' y='2' width='12' height='20' rx='2.5' fill='none' stroke='black' stroke-width='2'/><circle cx='12' cy='18.5' r='1' fill='black'/></svg>") center/contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='6' y='2' width='12' height='20' rx='2.5' fill='none' stroke='black' stroke-width='2'/><circle cx='12' cy='18.5' r='1' fill='black'/></svg>") center/contain no-repeat;
+}
+.channel h3 {
+  font-size: 1.8rem; color: var(--magenta); margin-bottom: 1rem;
+}
+.channel p { font-size: 0.95rem; line-height: 1.6; }
+.coaching-punch {
+  text-align: center; margin-top: 4rem;
+  padding: 3rem 2rem;
+  background: var(--magenta); color: var(--blanc);
+  border-radius: 20px;
+}
+.coaching-punch .quote {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0.03em; line-height: 1.1;
+}
+.coaching-punch .signature {
+  margin-top: 1rem; font-style: italic; opacity: 0.9;
+}
+
+/* VIDEO */
+.video-section { background: var(--blanc); text-align: center; }
+.video-section h2 { margin-bottom: 1rem; }
+.video-intro { max-width: 600px; margin: 0 auto 3rem; font-size: 1.1rem; }
+.video-wrapper {
+  max-width: 900px; margin: 0 auto;
+  position: relative; padding-bottom: 56.25%;
+  height: 0; border-radius: 20px; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(233, 30, 140, 0.15);
+}
+.video-wrapper iframe {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; border: none;
+}
+
+/* TÉMOIGNAGES */
+.testimonials {
+  background: linear-gradient(180deg, var(--lavande) 0%, var(--blanc) 100%);
+}
+.testimonials-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2rem; margin-top: 3rem;
+}
+@media (max-width: 768px) { .testimonials-grid { grid-template-columns: 1fr; } }
+.testimonial {
+  background: var(--blanc); padding: 2.5rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  position: relative;
+}
+.testimonial::before {
+  content: '"';
+  position: absolute; top: -1rem; left: 1.5rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 6rem; color: var(--magenta);
+  opacity: 0.2; line-height: 1;
+}
+.testimonial-quote {
+  font-size: 1rem; line-height: 1.7;
+  margin-bottom: 1.5rem; font-style: italic;
+}
+.testimonial-author {
+  font-family: 'Bebas Neue', sans-serif;
+  color: var(--magenta); letter-spacing: 0.05em;
+  font-size: 1.1rem;
+}
+.testimonial-role { font-size: 0.85rem; opacity: 0.7; }
+
+/* PRIX DÉCOMPOSÉ */
+.price-breakdown {
+  background: var(--noir); color: var(--blanc);
+  text-align: center; padding: 6rem 2rem;
+  position: relative; overflow: hidden;
+}
+.price-breakdown::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(233, 30, 140, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(245, 133, 90, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+.price-breakdown .section-label { color: var(--dore-clair); position: relative; z-index: 1; }
+.price-breakdown h2 {
+  color: var(--blanc); margin-bottom: 3rem;
+  position: relative; z-index: 1;
+}
+.price-breakdown h2 .accent { color: var(--dore-clair); }
+.breakdown-display {
+  display: flex; align-items: center; justify-content: center;
+  gap: 2rem; flex-wrap: wrap;
+  margin-bottom: 3rem; position: relative; z-index: 1;
+}
+.breakdown-step { text-align: center; }
+.breakdown-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  color: var(--blanc); line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+.breakdown-value.featured {
+  color: var(--dore-clair);
+  font-size: clamp(4rem, 10vw, 8rem);
+  text-shadow: 0 6px 0 var(--magenta-fonce);
+}
+.breakdown-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem; letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.7); margin-top: 0.5rem;
+}
+.breakdown-arrow {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem; color: var(--magenta);
+}
+@media (max-width: 768px) {
+  .breakdown-arrow { transform: rotate(90deg); font-size: 2rem; }
+}
+.daily-punch {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  color: var(--blanc); line-height: 1;
+  margin: 2rem 0 1rem;
+  position: relative; z-index: 1;
+}
+.daily-punch .dore { color: var(--dore-clair); }
+.comparison { margin-top: 3rem; position: relative; z-index: 1; }
+.comparison-title {
+  font-family: 'Bebas Neue', sans-serif;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.2em; font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+.comparison-row {
+  display: flex; justify-content: center;
+  gap: 1.5rem; flex-wrap: wrap;
+  font-size: 1.05rem; color: rgba(255,255,255,0.85);
+}
+.comparison-item {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 1rem 1.5rem; border-radius: 50px;
+}
+.comparison-item strong {
+  color: var(--dore-clair); font-weight: 700;
+}
+
+/* PRICING */
+.pricing {
+  background: linear-gradient(135deg, var(--magenta) 0%, var(--orange) 100%);
+  color: var(--blanc); position: relative; overflow: hidden;
+}
+.pricing::before {
+  content: '297€';
+  position: absolute;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30rem; color: rgba(255,255,255,0.05);
+  top: -5%; right: -10%; line-height: 0.8;
+  pointer-events: none;
+}
+.pricing .section-label { color: rgba(255,255,255,0.85); }
+.pricing h2 { color: var(--blanc); }
+.pricing-cards {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2rem; margin-top: 3rem;
+  position: relative; z-index: 1;
+}
+@media (max-width: 768px) { .pricing-cards { grid-template-columns: 1fr; } }
+.price-card {
+  background: var(--blanc); color: var(--noir);
+  padding: 3rem 2rem; border-radius: 20px;
+  text-align: center; position: relative;
+  transition: transform 0.3s ease;
+}
+.price-card:hover { transform: translateY(-5px); }
+.price-card.featured {
+  background: var(--noir); color: var(--blanc);
+  border: 3px solid var(--dore);
+}
+.price-badge {
+  position: absolute; top: -15px;
+  left: 50%; transform: translateX(-50%);
+  background: var(--dore); color: var(--noir);
+  padding: 0.4rem 1.2rem;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.1em; font-size: 0.85rem;
+  border-radius: 50px; white-space: nowrap;
+}
+.price-card h3 {
+  font-size: 2rem; margin-bottom: 0.5rem; color: inherit;
+}
+.price-amount {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem; line-height: 1;
+  margin: 1.5rem 0 0.5rem; color: var(--magenta);
+}
+.price-card.featured .price-amount { color: var(--dore); }
+.price-period { font-size: 0.95rem; opacity: 0.7; margin-bottom: 1.5rem; }
+.price-features {
+  list-style: none; margin: 2rem 0; text-align: left;
+}
+.price-features li {
+  padding: 0.5rem 0; font-size: 0.95rem;
+  display: flex; align-items: start; gap: 0.5rem;
+}
+.price-features li::before {
+  content: '✓'; color: var(--magenta);
+  font-weight: 700; flex-shrink: 0;
+}
+.price-card.featured .price-features li::before { color: var(--dore); }
+.btn-buy {
+  display: block;
+  background: var(--magenta); color: var(--blanc);
+  padding: 1.2rem 2rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem; letter-spacing: 0.08em;
+  text-decoration: none; border-radius: 60px;
+  transition: all 0.3s ease; margin-top: 1.5rem;
+}
+.btn-buy:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 30px rgba(233, 30, 140, 0.3);
+}
+.price-card.featured .btn-buy {
+  background: var(--dore); color: var(--noir);
+}
+.btn-buy.coming-soon {
+  background: rgba(0,0,0,0.12);
+  color: rgba(0,0,0,0.5);
+  cursor: not-allowed;
+}
+.price-card.featured .btn-buy.coming-soon {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.5);
+}
+.btn-buy.coming-soon:hover {
+  transform: none; box-shadow: none;
+}
+
+/* ALT OFFER */
+.alt-offer { background: var(--gris-doux); }
+.alt-offer-card {
+  background: var(--blanc); padding: 3rem;
+  border-radius: 20px; text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+  border: 2px dashed var(--magenta);
+}
+.alt-offer h3 {
+  font-size: 2.2rem; color: var(--magenta);
+  margin-bottom: 1rem;
+}
+.alt-offer p {
+  font-size: 1rem; max-width: 600px;
+  margin: 0 auto 2rem;
+}
+.alt-offer-prices {
+  display: flex; justify-content: center;
+  gap: 2rem; flex-wrap: wrap; margin-top: 2rem;
+}
+.alt-price { text-align: center; }
+.alt-price-amount {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem; color: var(--magenta); line-height: 1;
+}
+.alt-price-period { font-size: 0.85rem; opacity: 0.7; }
+.btn-alt {
+  display: inline-block;
+  background: transparent; color: var(--magenta);
+  padding: 1rem 2rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem; letter-spacing: 0.08em;
+  text-decoration: none; border-radius: 60px;
+  border: 2px solid var(--magenta);
+  margin: 1rem 0.5rem 0;
+  transition: all 0.3s ease;
+}
+.btn-alt:hover {
+  background: var(--magenta); color: var(--blanc);
+}
+
+/* FAQ */
+.faq { background: var(--blanc); }
+.faq-list {
+  margin-top: 3rem; max-width: 800px;
+  margin-left: auto; margin-right: auto;
+}
+.faq-item {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding: 1.5rem 0;
+}
+.faq-question {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem; color: var(--noir);
+  letter-spacing: 0.03em; cursor: pointer;
+  position: relative; padding-right: 2rem;
+  transition: color 0.3s ease;
+}
+.faq-question:hover { color: var(--magenta); }
+.faq-question::after {
+  content: '+'; position: absolute; right: 0; top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.8rem; color: var(--magenta);
+  transition: transform 0.3s ease;
+  font-family: 'Montserrat', sans-serif; font-weight: 300;
+}
+.faq-item.open .faq-question::after {
+  transform: translateY(-50%) rotate(45deg);
+}
+.faq-answer {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  font-size: 1rem; line-height: 1.7;
+}
+.faq-item.open .faq-answer {
+  max-height: 500px; padding-top: 1rem;
+}
+
+/* FINAL CTA */
+.final-cta {
+  background: var(--noir); color: var(--blanc);
+  text-align: center; padding: 8rem 2rem;
+  position: relative; overflow: hidden;
+}
+.final-cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(233, 30, 140, 0.2) 0%, transparent 60%);
+  pointer-events: none;
+}
+.final-cta h2 {
+  font-size: clamp(3rem, 7vw, 6rem);
+  color: var(--blanc); margin-bottom: 1rem;
+  position: relative;
+}
+.final-cta h2 .accent { color: var(--magenta); }
+.final-cta p {
+  font-size: 1.2rem; max-width: 600px;
+  margin: 0 auto 2.5rem; position: relative;
+}
+.final-cta .scarcity {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.15em; color: var(--dore);
+  margin-bottom: 2rem; font-size: 1.1rem;
+  position: relative;
+}
+.final-cta .btn-cta {
+  background: linear-gradient(135deg, var(--magenta) 0%, var(--orange) 100%);
+  color: var(--blanc); position: relative;
+}
+
+/* FOOTER */
+footer {
+  background: var(--noir); color: rgba(255,255,255,0.7);
+  padding: 3rem 2rem; text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.9rem;
+}
+footer .footer-name {
+  font-family: 'Bebas Neue', sans-serif;
+  color: var(--magenta); letter-spacing: 0.1em;
+  font-size: 1.2rem; margin-bottom: 0.5rem;
+}
+footer a { color: var(--hot-pink); text-decoration: none; }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero h1, .hero-subtitle, .hero-promise, .hero .btn-cta {
+  animation: fadeUp 0.8s ease backwards;
+}
+.hero-subtitle { animation-delay: 0.2s; }
+.hero-promise { animation-delay: 0.4s; }
+.hero .btn-cta { animation-delay: 0.6s; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .nav { padding: 0.8rem 1rem; }
+  .nav-logo-text .subtitle { display: none; }
+  .nav-back { padding: 0.5rem 1rem; font-size: 0.8rem; }
+  .section { padding: 4rem 1.5rem; }
+  .hero { padding: 4rem 1.5rem 6rem; }
+  .price-breakdown { padding: 4rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">
+    <div class="nav-logo-circle">PR</div>
+    <div class="nav-logo-text">
+      <div class="name">PAUL RECINOS</div>
+      <div class="subtitle">Coach Sportif · Neuilly-sur-Seine</div>
+    </div>
+  </div>
+  <a href="https://paulrecinos-coach.com" class="nav-back">← Retour au site</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">Méthode Longévité · Accompagnement 90 jours</div>
+  <h1>13 MIN<br>PAR JOUR</h1>
+  <div class="hero-subtitle">Pour transformer ton corps, ton mental, ta vie</div>
+  <p class="hero-promise">
+    90 jours avec moi à tes côtés. Un <strong>vrai coach humain</strong>, pas une IA.
+    Pour les femmes 40-55 qui veulent enfin une méthode qui tient — sans y passer leurs journées.
+  </p>
+  <a href="#pricing" class="btn-cta">Je rejoins la méthode</a>
+  <div class="hero-price">À partir de 3,30 € par jour · Places limitées à 30 femmes</div>
+</section>
+
+<section class="section for-whom">
+  <div class="container">
+    <span class="section-label">— Pour qui</span>
+    <h2>Tu en as <span class="accent">marre.</span></h2>
+    <p>Marre des promesses creuses des apps fitness qui te démotivent au bout de 3 jours.</p>
+    <p>Marre des coachs qui te demandent <span class="highlight">1 heure par jour que tu n'as pas</span>.</p>
+    <p>Marre des régimes qui te font reprendre 2× plus de poids 6 mois après.</p>
+    <p>Tu veux te sentir bien dans ton corps, retrouver de l'énergie, calmer ce mental qui tourne en boucle. Mais surtout — tu ne veux pas faire ça toute seule.</p>
+    <p class="punchline">C'est exactement pour toi que j'ai créé la Méthode Longévité.</p>
+  </div>
+</section>
+
+<section class="section clients">
+  <div class="container">
+    <span class="section-label">— Mes clients</span>
+    <h2>J'ai eu la chance de coacher des <span class="accent">personnalités exigeantes,</span></h2>
+    <p class="clients-intro">qui savent reconnaître un vrai professionnel quand elles en croisent un.</p>
+
+    <ul class="client-list">
+      <li><div><span class="client-name">Thierry Ardisson</span> <span class="client-role">· présentateur TV</span></div></li>
+      <li><div><span class="client-name">Béatrice Ardisson</span> <span class="client-role">· DJ</span></div></li>
+      <li><div><span class="client-name">Gaston Ardisson</span> <span class="client-role">· entrepreneur</span></div></li>
+      <li><div><span class="client-name">Alexandra Lapierre</span> <span class="client-role">· écrivaine</span></div></li>
+      <li><div><span class="client-name">Maître Basile Adère Vise</span> <span class="client-role">· vice-bâtonnier de Paris</span></div></li>
+      <li><div><span class="client-name">Valérie Delafosse</span> <span class="client-role">· cofondatrice Princesse Tam Tam, directrice artistique d'Ères</span></div></li>
+    </ul>
+
+    <div class="clients-punchline">Aujourd'hui, ce savoir-faire est pour toi.</div>
+  </div>
+</section>
+
+<section class="section program">
+  <div class="container">
+    <span class="section-label">— Le programme</span>
+    <h2>13 minutes par jour. <span class="accent">C'est tout.</span></h2>
+
+    <div class="time-display">
+      <div class="time-number">13</div>
+      <div class="time-unit">MINUTES PAR JOUR</div>
+      <div class="time-detail">10 min de sport + 3 min de vidéo thème (2 fois par semaine)</div>
+    </div>
+
+    <div class="program-blocks">
+
+      <div class="block">
+        <div class="block-icon"></div>
+        <h3>Chaque matin</h3>
+        <div class="block-duration">10 MIN DE RÉVEIL SPORTIF</div>
+        <p>Tu choisis ta vidéo selon ton énergie du jour et ton objectif. 7 jours sur 7. Pas plus.</p>
+        <div class="choice-row">
+          <div class="choice">
+            <div class="choice-title">Sport Tonique</div>
+            <div class="choice-desc">Perdre du poids · Brûler · S'énergiser</div>
+          </div>
+          <div class="choice">
+            <div class="choice-title">Sport Doux</div>
+            <div class="choice-desc">Réveil doux · Mobilité · Souplesse</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block alt">
+        <div class="block-icon"></div>
+        <h3>2× par semaine</h3>
+        <div class="block-duration">3 MIN POUR TA TÊTE</div>
+        <p>Une vidéo courte sur un thème de transformation profonde. Lundi + Jeudi (par exemple). Sur 12 semaines, tu suis tout un parcours qui va changer ta vie de l'intérieur.</p>
+        <div class="choice-row">
+          <div class="choice">
+            <div class="choice-title">24 vidéos</div>
+            <div class="choice-desc">Réparties sur 3 mois</div>
+          </div>
+          <div class="choice">
+            <div class="choice-title">3 modules</div>
+            <div class="choice-desc">Mental · Alimentation · Perso</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section modules">
+  <div class="container">
+    <span class="section-label">— Les 3 modules essentiels</span>
+    <h2>3 mois, 3 <span class="accent">transformations.</span></h2>
+
+    <div class="modules-grid">
+
+      <div class="module">
+        <div class="module-number">01</div>
+        <div class="module-period">MOIS 1 · SEMAINES 1-4</div>
+        <h3>Préparation Mentale</h3>
+        <p>On pose les fondations. Sans le mental, rien ne tient. Tu apprends à dompter ton mental, calmer le stress, retrouver le calme intérieur.</p>
+        <div class="module-count">8 vidéos · 2/semaine</div>
+      </div>
+
+      <div class="module">
+        <div class="module-number">02</div>
+        <div class="module-period">MOIS 2 · SEMAINES 5-8</div>
+        <h3>Alimentation</h3>
+        <p>Tu manges mieux sans régime, sans culpabilité, sans frustration. Une approche bienveillante qui fait la paix avec ton corps.</p>
+        <div class="module-count">8 vidéos · 2/semaine</div>
+      </div>
+
+      <div class="module">
+        <div class="module-number">03</div>
+        <div class="module-period">MOIS 3 · SEMAINES 9-12</div>
+        <h3>Développement Personnel</h3>
+        <p>Tu ancres ta nouvelle vie. Pour toujours. Confiance, habitudes durables, énergie quotidienne — tout devient naturel.</p>
+        <div class="module-count">8 vidéos · 2/semaine</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section coaching">
+  <div class="container">
+    <span class="section-label">— Le suivi humain</span>
+    <h2>Et surtout : <span class="accent">moi.</span> À tes côtés. Pendant 90 jours.</h2>
+
+    <div class="coaching-channels">
+
+      <div class="channel">
+        <div class="channel-icon telegram"></div>
+        <h3>Telegram</h3>
+        <p><strong>1 audio chaque dimanche soir</strong> avec ton programme de la semaine, ma motivation, mon coup de boost.</p>
+        <p>Tes questions perso ? Réponse en moins de 2h (lundi-vendredi, 9h-20h).</p>
+      </div>
+
+      <div class="channel">
+        <div class="channel-icon community"></div>
+        <h3>Facebook privé</h3>
+        <p>Tu rejoins le groupe <strong>"Méthode Longévité"</strong>. Tu partages tes séances, tes progrès, ton vécu.</p>
+        <p>D'autres femmes vivent la même chose que toi. Tu n'es plus jamais seule.</p>
+      </div>
+
+      <div class="channel">
+        <div class="channel-icon app"></div>
+        <h3>Application</h3>
+        <p>Toutes les <strong>vidéos en accès illimité 24/7</strong>. Tracking, badges, points, progression.</p>
+        <p>Ta routine reste avec toi, même quand tu voyages.</p>
+      </div>
+
+    </div>
+
+    <div class="coaching-punch">
+      <div class="quote">"Avec Polito, j'ai enfin l'impression d'être<br>suivie par quelqu'un qui me connaît vraiment."</div>
+      <div class="signature">— Caroline, 39 ans, maman</div>
+    </div>
+  </div>
+</section>
+
+<section class="section video-section">
+  <div class="container">
+    <span class="section-label">— Témoignage vidéo</span>
+    <h2>Johanna te raconte <span class="accent">sa transformation</span></h2>
+    <p class="video-intro">Avocate, 42 ans, maman. Pas le temps pour autre chose. Voici ce qu'elle dit de la Méthode Longévité.</p>
+
+    <div class="video-wrapper">
+      <iframe
+        src="https://www.youtube.com/embed/YhGdVmlVRoA"
+        title="Témoignage Johanna - Méthode Longévité"
+        allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<section class="section testimonials">
+  <div class="container">
+    <span class="section-label">— Témoignages</span>
+    <h2>Elles ont <span class="accent">transformé leur vie.</span></h2>
+
+    <div class="testimonials-grid">
+
+      <div class="testimonial">
+        <p class="testimonial-quote">En 3 mois, j'ai retrouvé mon énergie de mes 30 ans. Et surtout, Polito est TOUJOURS là quand j'ai un doute. C'est ça qui fait la différence.</p>
+        <div class="testimonial-author">Marie</div>
+        <div class="testimonial-role">43 ans</div>
+      </div>
+
+      <div class="testimonial">
+        <p class="testimonial-quote">J'ai testé tellement d'apps. Aucune ne m'a fait tenir comme la Méthode Longévité. Le secret ? Polito est un vrai humain qui répond à mes messages.</p>
+        <div class="testimonial-author">Johanna</div>
+        <div class="testimonial-role">42 ans · avocate</div>
+      </div>
+
+      <div class="testimonial">
+        <p class="testimonial-quote">Maman de 2 enfants, je n'avais JAMAIS le temps. 13 minutes par jour, ça je peux. Et le résultat est dingue.</p>
+        <div class="testimonial-author">Caroline</div>
+        <div class="testimonial-role">39 ans · maman</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="price-breakdown">
+  <div class="container">
+    <span class="section-label">— Investissement</span>
+    <h2>Combien ça coûte <span class="accent">vraiment ?</span></h2>
+
+    <div class="breakdown-display">
+      <div class="breakdown-step">
+        <div class="breakdown-value">297€</div>
+        <div class="breakdown-label">TOTAL · 90 JOURS</div>
+      </div>
+      <div class="breakdown-arrow">→</div>
+      <div class="breakdown-step">
+        <div class="breakdown-value featured">3,30€</div>
+        <div class="breakdown-label">PAR JOUR</div>
+      </div>
+    </div>
+
+    <div class="daily-punch">Moins qu'un <span class="dore">café</span> par jour.</div>
+
+    <div class="comparison">
+      <div class="comparison-title">— En comparaison</div>
+      <div class="comparison-row">
+        <div class="comparison-item">Un café à Paris : <strong>3,80€</strong></div>
+        <div class="comparison-item">Un trajet Uber : <strong>15€</strong></div>
+        <div class="comparison-item">Une place de ciné : <strong>13€</strong></div>
+        <div class="comparison-item">Une séance perso : <strong>60-100€</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section pricing" id="pricing">
+  <div class="container">
+    <span class="section-label">— Tarifs</span>
+    <h2>Choisis ta formule</h2>
+
+    <div class="pricing-cards">
+
+      <div class="price-card featured">
+        <div class="price-badge">Recommandé · Économies 60€</div>
+        <h3>Paiement unique</h3>
+        <div class="price-amount">297€</div>
+        <div class="price-period">soit 3,30€ par jour pendant 90 jours</div>
+        <ul class="price-features">
+          <li>Accompagnement personnel Polito 3 mois</li>
+          <li>Programme sur Telegram hebdomadaire</li>
+          <li>Réponses perso en moins de 2h sur Telegram</li>
+          <li>Groupe Facebook privé Méthode Longévité</li>
+          <li>App Longévité Sport (9,99€/mois) requise en complément</li>
+        </ul>
+        <a href="https://buy.stripe.com/fZu7sM2u26Ticmc3262Ry09" class="btn-buy">Réserver ma place — 297€</a>
+      </div>
+
+      <div class="price-card">
+        <h3>Paiement en 3 fois</h3>
+        <div class="price-amount">119€<span style="font-size: 1.5rem;"> / mois</span></div>
+        <div class="price-period">Mois 1 du programme · Renouvelable mois 2 et mois 3 (357€ au total)</div>
+        <ul class="price-features">
+          <li>Démarrage immédiat du programme</li>
+          <li>Mois 2 et mois 3 : 119€ chacun, validés avec Polito</li>
+          <li>Aucun prélèvement automatique : tu gardes le contrôle</li>
+          <li>Tout le programme à 297€</li>
+          <li>App Longévité Sport (9,99€/mois) requise en complément</li>
+        </ul>
+        <a href="https://buy.stripe.com/8x228sd8G2D2ae4dGK2Ry0a" class="btn-buy">Démarrer — 119€</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section alt-offer">
+  <div class="container">
+    <div class="alt-offer-card">
+      <h3>Pas prête pour l'accompagnement ?</h3>
+      <p>Tu peux commencer en autonomie avec l'application <strong>Longévité Sport</strong> seule. Tu auras accès à toutes les vidéos (sport + 3 modules), mais sans mon suivi personnel.</p>
+
+      <div class="alt-offer-prices">
+        <div class="alt-price">
+          <div class="alt-price-amount">9,99€</div>
+          <div class="alt-price-period">par mois</div>
+        </div>
+        <div class="alt-price">
+          <div class="alt-price-amount">79,99€</div>
+          <div class="alt-price-period">par an (économise 33%)</div>
+        </div>
+      </div>
+
+      <div>
+        <a href="https://buy.stripe.com/4gM00k4Ca91qcmcgSW2Ry07" class="btn-alt">Mensuel 9,99€</a>
+        <a href="https://buy.stripe.com/3cI5kE5Ge3H60Duauy2Ry08" class="btn-alt">Annuel 79,99€</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section faq">
+  <div class="container">
+    <span class="section-label">— Questions fréquentes</span>
+    <h2>Tu te demandes <span class="accent">peut-être...</span></h2>
+
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-question">Je n'ai jamais fait de sport, est-ce que c'est pour moi ?</div>
+        <div class="faq-answer">Oui, totalement. Les vidéos Sport Doux sont parfaites pour démarrer. Tu progresses à ton rythme. Et je suis là pour adapter si besoin.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">J'ai un emploi du temps de folie, je n'aurai jamais le temps.</div>
+        <div class="faq-answer">13 minutes par jour, c'est moins que ton scroll Instagram du matin. Si tu n'as pas 13 minutes pour toi, c'est que la méthode arrive au bon moment.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Et si je n'aime pas après 1 mois ?</div>
+        <div class="faq-answer">Si après le premier mois tu sens que ce n'est vraiment pas pour toi, on en parle ensemble et on trouve une solution.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Qu'est-ce qui se passe après les 90 jours ?</div>
+        <div class="faq-answer">Tu peux renouveler ton accompagnement à 297€ pour 3 mois supplémentaires (nouveau cycle plus avancé), ou simplement garder l'application à 9,99€/mois pour continuer en autonomie. Tu choisis.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Combien de femmes accompagnes-tu en même temps ?</div>
+        <div class="faq-answer">Maximum 30. Pas plus. C'est ce qui me permet de garder un suivi vraiment personnel pour chacune. Quand c'est complet, c'est complet.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Est-ce que je peux annuler en cours de route ?</div>
+        <div class="faq-answer">Pour le paiement unique (297€), il n'y a pas de remboursement après le mois 1. Pour le paiement en 3 fois (119€), comme chaque mensualité est validée séparément avec moi, tu peux décider d'arrêter avant les paiements du mois 2 ou du mois 3.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="container">
+    <h2>Prête à <span class="accent">commencer ?</span></h2>
+    <div class="scarcity">Places limitées à 30 femmes</div>
+    <p>90 jours. 13 minutes par jour. 3,30€ par jour. Un coach humain à tes côtés. Une transformation qui dure toute la vie.</p>
+    <a href="#pricing" class="btn-cta">Je rejoins la méthode</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-name">MÉTHODE LONGÉVITÉ</div>
+  <p>Paul Recinos · Coach Sportif · Neuilly-sur-Seine (92200)</p>
+  <p>Contact : <a href="mailto:coach@recinospaul.com">coach@recinospaul.com</a></p>
+  <p style="margin-top: 1rem; opacity: 0.5; font-size: 0.85rem;">© 2026 Paul Recinos · Tous droits réservés</p>
+</footer>
+
+<script>
+document.querySelectorAll('.faq-question').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    item.classList.toggle('open');
+  });
+});
+</script>
+
+</body>
+</html>
