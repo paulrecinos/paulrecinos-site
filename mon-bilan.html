@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#FFCDD9" />
+<title>Longévité Sport — Ta projection</title>
+<style>
+:root {
+  --rose: #FF4F8B;
+  --rose-soft: #FF85AC;
+  --corail: #FF7A3D;
+  --orange-clair: #FFAB7A;
+  --navy: #111827;
+  --navy-soft: #1F2937;
+  --navy-mid: #374151;
+  --ivory: #F9FAFB;
+  --vert: #7ED957;
+  --vert-fonce: #4EA82A;
+  --rouge: #FF4D4D;
+  --rouge-fonce: #C2272E;
+  --gris: #6B7280;
+  --gris-clair: #E5E7EB;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; touch-action: manipulation; -webkit-appearance: none; appearance: none; font-family: inherit; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif;
+  background:
+    radial-gradient(ellipse at top right, #FFE0E8 0%, transparent 50%),
+    radial-gradient(ellipse at bottom left, #FFE2D2 0%, transparent 55%),
+    linear-gradient(170deg, #FFF4EE 0%, #FFE8DE 40%, #FFDCE5 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--navy);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body::before, body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+body::before {
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, var(--rose), transparent 70%);
+  top: -120px; right: -140px;
+}
+body::after {
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, var(--corail), transparent 70%);
+  bottom: -180px; left: -160px;
+}
+.app {
+  max-width: 440px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 20px 20px 140px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== HEADER ===== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--navy);
+  text-transform: uppercase;
+}
+.logo-mark {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--rose), var(--corail));
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: 900;
+}
+.step-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--navy);
+  opacity: 0.5;
+  letter-spacing: 0.05em;
+}
+
+/* ===== PROGRESS ===== */
+.progress {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 28px;
+  height: 4px;
+}
+.progress .bar {
+  flex: 1;
+  background: rgba(17, 24, 39, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.progress .bar.done { background: var(--navy); }
+.progress .bar.active::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 60%;
+  background: linear-gradient(90deg, var(--rose), var(--corail));
+  border-radius: 4px;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+/* ===== SCREENS ===== */
+.screen { display: none; animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.screen.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== TYPO ===== */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 14px;
+}
+h1 {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  margin: 0 0 14px;
+  color: var(--navy);
+}
+h1 .gradient {
+  background: linear-gradient(135deg, var(--rose) 0%, var(--corail) 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+  line-height: 1.2;
+}
+.lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--navy-soft);
+  margin: 0 0 20px;
+  opacity: 0.85;
+}
+.fineprint {
+  font-size: 12px;
+  color: var(--gris);
+  text-align: center;
+  margin-top: 14px;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 17px 20px;
+  border-radius: 16px;
+  border: none;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.25s ease, opacity 0.2s ease;
+  letter-spacing: -0.01em;
+}
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--rose) 0%, var(--corail) 100%);
+  color: white;
+  box-shadow: 0 10px 28px rgba(255, 79, 139, 0.38);
+}
+.btn-primary:disabled { box-shadow: none; }
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--navy);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+}
+.btn-cta {
+  background: var(--navy);
+  color: white;
+  box-shadow: 0 14px 32px rgba(17, 24, 39, 0.32);
+  padding: 19px 20px;
+  font-size: 17px;
+}
+.btn-cta-rose {
+  background: linear-gradient(135deg, var(--rose), var(--corail));
+  color: white;
+  box-shadow: 0 14px 36px rgba(255, 79, 139, 0.45);
+  padding: 19px 20px;
+  font-size: 17px;
+}
+.btn-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.btn-icon { width: 18px; height: 18px; }
+
+/* ===== CARD ===== */
+.card {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 24px;
+  padding: 22px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 24px rgba(17, 24, 39, 0.05);
+}
+
+/* ===== SLIDER ROW (scoring) ===== */
+.slider-row { margin-bottom: 16px; }
+.slider-row:last-child { margin-bottom: 0; }
+.slider-row .label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.slider-row .name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+}
+.slider-row .value {
+  font-size: 17px;
+  font-weight: 800;
+  min-width: 22px;
+  text-align: right;
+  transition: color 0.3s ease;
+  color: var(--gris-clair);
+}
+.slider-row.scored .value { color: var(--rose); }
+.scale {
+  display: flex;
+  gap: 3px;
+  width: 100%;
+}
+.pip {
+  flex: 1;
+  height: 30px;
+  border-radius: 7px;
+  background: rgba(17, 24, 39, 0.06);
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+  padding: 0;
+}
+.pip:active { transform: scale(0.92); }
+.pip.filled.low { background: var(--rouge); }
+.pip.filled.mid { background: var(--corail); }
+.pip.filled.high { background: var(--vert-fonce); }
+
+/* ===== RADAR ===== */
+.radar-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 4px 0 18px;
+  position: relative;
+}
+.radar-svg { width: 100%; max-width: 340px; height: auto; }
+.radar-grid-line { stroke: rgba(17, 24, 39, 0.1); stroke-width: 1; fill: none; }
+.radar-grid-poly { stroke: rgba(17, 24, 39, 0.08); stroke-width: 1; fill: none; }
+.radar-axis-label {
+  font-size: 9px;
+  font-weight: 700;
+  fill: var(--navy);
+  opacity: 0.65;
+  letter-spacing: 0.02em;
+}
+.radar-fill {
+  fill: url(#brandFill);
+  fill-opacity: 0.65;
+  stroke: var(--rose);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.radar-point {
+  fill: white;
+  stroke: var(--rose);
+  stroke-width: 2;
+  transition: all 0.5s ease;
+}
+
+/* ===== INSIGHT ===== */
+.insight {
+  background: linear-gradient(135deg, rgba(255, 79, 139, 0.1), rgba(255, 122, 61, 0.1));
+  border: 1px solid rgba(255, 79, 139, 0.22);
+  border-radius: 20px;
+  padding: 18px 18px 16px;
+  margin-bottom: 14px;
+  position: relative;
+}
+.insight-eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 8px;
+}
+.insight p {
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--navy);
+  margin: 0;
+  font-weight: 500;
+}
+.insight strong { color: var(--rose); font-weight: 700; }
+
+.quote-block {
+  text-align: center;
+  padding: 24px 8px;
+  margin: 20px 0;
+}
+.quote-block .q-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy);
+  opacity: 0.5;
+  margin-bottom: 10px;
+}
+.quote-block .q-text {
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  margin: 0;
+}
+.quote-block .q-text .gradient {
+  background: linear-gradient(135deg, var(--rose), var(--corail));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== STATS ===== */
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.stat {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 14px 14px 12px;
+}
+.stat .lbl {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gris);
+  margin-bottom: 4px;
+}
+.stat .val {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+}
+.stat .val.vert { color: var(--vert-fonce); }
+.stat .val.rouge { color: var(--rouge-fonce); }
+.stat .val.corail { color: var(--corail); }
+.stat .sub { font-size: 12px; color: var(--gris); margin-top: 2px; }
+
+/* ===== TAGS ===== */
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  border: 1px solid rgba(17, 24, 39, 0.1);
+  border-radius: 999px;
+  padding: 7px 13px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--navy);
+}
+.tag .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+}
+.tag .dot.rouge { background: var(--rouge); }
+.tag .dot.corail { background: var(--corail); }
+.tag .dot.vert { background: var(--vert-fonce); }
+
+/* ===== SECTION TITLE ===== */
+.section-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 20px 0 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-title::before {
+  content: '';
+  width: 4px;
+  height: 14px;
+  background: linear-gradient(180deg, var(--rose), var(--corail));
+  border-radius: 2px;
+}
+.section-title .count {
+  margin-left: auto;
+  background: rgba(17, 24, 39, 0.06);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--navy-soft);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ===== TOGGLE ===== */
+.toggle-row {
+  display: flex;
+  gap: 5px;
+  background: rgba(17, 24, 39, 0.06);
+  padding: 4px;
+  border-radius: 14px;
+  margin: 16px 0;
+}
+.toggle-btn {
+  flex: 1;
+  padding: 11px 8px;
+  border: none;
+  background: transparent;
+  border-radius: 11px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy-soft);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: -0.01em;
+}
+.toggle-btn.active {
+  background: white;
+  box-shadow: 0 2px 10px rgba(17, 24, 39, 0.1);
+}
+.toggle-btn.active.red { color: var(--rouge-fonce); }
+.toggle-btn.active.green { color: var(--vert-fonce); }
+
+/* ===== TRAJECTORY ===== */
+.trajectory-wrap {
+  background: rgba(17, 24, 39, 0.92);
+  border-radius: 24px;
+  padding: 18px 14px 14px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.trajectory-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(255, 79, 139, 0.15), transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 122, 61, 0.12), transparent 50%);
+  pointer-events: none;
+}
+.trajectory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+  position: relative;
+}
+.trajectory-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: white;
+  opacity: 0.7;
+}
+.trajectory-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.trajectory-tag.red {
+  background: rgba(255, 77, 77, 0.18);
+  color: #FF8A8A;
+}
+.trajectory-tag.green {
+  background: rgba(126, 217, 87, 0.18);
+  color: #B0F081;
+}
+.trajectory-svg { width: 100%; height: auto; display: block; position: relative; }
+
+/* ===== STACK LIST ===== */
+.stack-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin: 18px 0;
+}
+.stack-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: rgba(255, 255, 255, 0.68);
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+.stack-icon {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--rose), var(--corail));
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+.stack-text { flex: 1; }
+.stack-text .ttl {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+}
+.stack-text .sub {
+  font-size: 12.5px;
+  color: var(--gris);
+  margin-top: 1px;
+}
+
+/* ===== TESTIMONIAL ===== */
+.testimo {
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  padding: 16px;
+  margin: 14px 0;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.testimo-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose), var(--corail));
+  color: white;
+  font-size: 15px;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.testimo-content { flex: 1; }
+.testimo-quote {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--navy);
+  margin: 0 0 6px;
+  font-weight: 500;
+}
+.testimo-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--rose);
+  letter-spacing: 0.02em;
+}
+
+/* ===== INTRO HERO ===== */
+.intro-hero {
+  padding: 20px 0 0;
+}
+.intro-hero h1 { font-size: 34px; }
+.intro-meta {
+  display: flex;
+  gap: 14px;
+  margin: 22px 0 26px;
+}
+.intro-meta-item {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 14px;
+  padding: 12px 10px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+.intro-meta-item .v {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+}
+.intro-meta-item .l {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gris);
+  margin-top: 2px;
+}
+
+/* ===== FINAL CTA ===== */
+.final-hero {
+  text-align: center;
+  padding: 16px 0 4px;
+}
+.final-hero h1 { font-size: 32px; }
+.signature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(17, 24, 39, 0.08);
+}
+.sig-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), var(--navy-soft));
+  color: white;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.sig-text {
+  font-size: 12px;
+  color: var(--gris);
+  text-align: left;
+}
+.sig-text strong { color: var(--navy); font-weight: 700; }
+
+/* Helper */
+.center { text-align: center; }
+.spacer-sm { height: 8px; }
+.spacer-md { height: 18px; }
+
+/* ===== FORMULAIRE EMAIL (screen 7) ===== */
+.email-form {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 22px;
+  padding: 22px 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 24px rgba(17, 24, 39, 0.05);
+}
+.form-row { margin-bottom: 14px; }
+.form-row:last-of-type { margin-bottom: 16px; }
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--navy-soft);
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+.form-input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(17, 24, 39, 0.1);
+  background: white;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--navy);
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--rose);
+  box-shadow: 0 0 0 4px rgba(255, 79, 139, 0.12);
+}
+.form-input::placeholder {
+  color: var(--gris);
+  opacity: 0.5;
+}
+.form-skip {
+  text-align: center;
+  margin-top: 8px;
+}
+.link-button {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--navy-soft);
+  opacity: 0.65;
+  cursor: pointer;
+  padding: 8px 16px;
+  letter-spacing: -0.01em;
+  text-decoration: underline;
+  text-decoration-color: rgba(17, 24, 39, 0.2);
+  text-underline-offset: 3px;
+}
+.link-button:hover { opacity: 0.9; }
+
+/* ===== CTA CARDS (screen 8) ===== */
+.cta-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 18px 0 24px;
+}
+.cta-card {
+  display: block;
+  position: relative;
+  padding: 18px 18px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: var(--navy);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: transform 0.18s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.cta-card:active { transform: scale(0.985); }
+.cta-card-premium {
+  background: linear-gradient(135deg, rgba(255, 79, 139, 0.95), rgba(255, 122, 61, 0.95));
+  color: white;
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 10px 28px rgba(255, 79, 139, 0.35);
+}
+.cta-card-app {
+  background: var(--navy);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.25);
+}
+.cta-card-community {
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--navy);
+}
+.cta-card-emoji {
+  font-size: 28px;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+.cta-card-eyebrow {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+.cta-card-title {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.cta-card-desc {
+  font-size: 13.5px;
+  line-height: 1.45;
+  opacity: 0.85;
+  margin-bottom: 10px;
+}
+.cta-card-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+}
+.cta-card-community .cta-card-tag {
+  background: rgba(17, 24, 39, 0.08);
+  color: var(--navy-soft);
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="brandFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF4F8B" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#FF7A3D" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="greenLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7ED957"/>
+      <stop offset="100%" stop-color="#B0F081"/>
+    </linearGradient>
+    <linearGradient id="redLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF4D4D"/>
+      <stop offset="100%" stop-color="#FF8A8A"/>
+    </linearGradient>
+    <radialGradient id="centerGlow">
+      <stop offset="0%" stop-color="#FF4F8B" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#FF7A3D" stop-opacity="0.7"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<div class="app">
+
+  <header class="header">
+    <div class="logo">
+      <div class="logo-mark">L</div>
+      <span>Longévité&nbsp;Sport</span>
+    </div>
+    <div class="step-count" id="stepCount">Étape 1/5</div>
+  </header>
+
+  <div class="progress" id="progress"></div>
+
+  <!-- =================== SCREEN 0 : INTRO =================== -->
+  <section class="screen active" id="screen-0">
+    <div class="intro-hero">
+      <div class="eyebrow">Bilan personnel · 5 min</div>
+      <h1>Et si tu prenais <span class="gradient">5 minutes</span> pour faire le point sur ta vie&nbsp;?</h1>
+      <p class="lead">Un parcours guidé pour visualiser où tu en es aujourd'hui, où ton énergie part vraiment, et où tu seras dans 15 ans si rien ne change.</p>
+
+      <div class="intro-meta">
+        <div class="intro-meta-item">
+          <div class="v">3</div>
+          <div class="l">Étapes</div>
+        </div>
+        <div class="intro-meta-item">
+          <div class="v">5 min</div>
+          <div class="l">Temps</div>
+        </div>
+        <div class="intro-meta-item">
+          <div class="v">100%</div>
+          <div class="l">Privé</div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary" data-action="goto" data-target="1">
+        Commencer mon bilan
+      </button>
+      <p class="fineprint">Tes réponses ne sont enregistrées qu'ici, sur ton téléphone.</p>
+    </div>
+  </section>
+
+  <!-- =================== SCREEN 1 : ROUE DE VIE =================== -->
+  <section class="screen" id="screen-1">
+    <div class="eyebrow">Étape 1 · Ta roue de vie</div>
+    <h1>Où en es-tu <span class="gradient">aujourd'hui</span>&nbsp;?</h1>
+    <p class="lead">Note chaque domaine de 0 à 10. Sois honnête — c'est entre toi et toi.</p>
+
+    <div class="radar-wrap">
+      <svg class="radar-svg" id="wheelRadar" viewBox="0 0 340 340" aria-label="Roue de vie"></svg>
+    </div>
+
+    <div class="card" id="wheelSliders"></div>
+
+    <button type="button" class="btn btn-primary" id="wheelNext" disabled data-action="finishWheel">
+      Voir mon résumé
+    </button>
+  </section>
+
+  <!-- =================== SCREEN 2 : RÉSULTAT ROUE =================== -->
+  <section class="screen" id="screen-2">
+    <div class="eyebrow">Bilan · Ta roue de vie</div>
+    <h1>Voici ce que <span class="gradient">ta roue</span> te dit</h1>
+
+    <div class="radar-wrap">
+      <svg class="radar-svg" id="wheelRadarResult" viewBox="0 0 340 340" aria-label="Roue de vie résultat"></svg>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="lbl">Équilibre global</div>
+        <div class="val" id="wheelAvg">—</div>
+        <div class="sub" id="wheelAvgSub">sur 10</div>
+      </div>
+      <div class="stat">
+        <div class="lbl">Écart max</div>
+        <div class="val corail" id="wheelGap">—</div>
+        <div class="sub">points entre tes axes</div>
+      </div>
+    </div>
+
+    <div class="section-title">Points forts <span class="count" id="strongCount">0</span></div>
+    <div class="tag-row" id="strongTags"></div>
+
+    <div class="section-title">À renforcer <span class="count" id="weakCount">0</span></div>
+    <div class="tag-row" id="weakTags"></div>
+
+    <div class="insight">
+      <div class="insight-eyebrow">Message</div>
+      <p id="wheelInsight">—</p>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-action="goto" data-target="3">Voir où va mon énergie</button>
+  </section>
+
+  <!-- =================== SCREEN 3 : CERCLE DE L'ATTENTION =================== -->
+  <section class="screen" id="screen-3">
+    <div class="eyebrow">Étape 2 · Cercle de l'attention</div>
+    <h1>Où va ton <span class="gradient">attention</span>, chaque jour&nbsp;?</h1>
+    <p class="lead">Note le temps et l'énergie que tu donnes vraiment à chaque chose. 0 = aucune. 10 = beaucoup trop, ou beaucoup.</p>
+
+    <div class="radar-wrap">
+      <svg class="radar-svg" id="attentionRadar" viewBox="0 0 340 340" aria-label="Cercle d'attention"></svg>
+    </div>
+
+    <div class="section-title">Énergie qui part vers l'extérieur</div>
+    <div class="card" id="attentionOut"></div>
+
+    <div class="section-title">Énergie pour toi-même</div>
+    <div class="card" id="attentionIn"></div>
+
+    <button type="button" class="btn btn-primary" id="attentionNext" disabled data-action="finishAttention">
+      Voir mon résultat
+    </button>
+  </section>
+
+  <!-- =================== SCREEN 4 : RÉSULTAT ATTENTION =================== -->
+  <section class="screen" id="screen-4">
+    <div class="eyebrow">Bilan · Ton attention</div>
+    <h1>Là où va ton attention, <span class="gradient">va ton énergie.</span></h1>
+
+    <div class="radar-wrap">
+      <svg class="radar-svg" id="attentionRadarResult" viewBox="0 0 340 340" aria-label="Cercle d'attention résultat"></svg>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="lbl">Vers l'extérieur</div>
+        <div class="val rouge" id="attOut">—</div>
+        <div class="sub">écrans, stress, obligations</div>
+      </div>
+      <div class="stat">
+        <div class="lbl">Pour toi-même</div>
+        <div class="val vert" id="attIn">—</div>
+        <div class="sub">corps, mental, calme</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-eyebrow">Ce que ton attention dit</div>
+      <p id="attentionInsight">—</p>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-action="goto" data-target="5">Voir ma projection dans 15 ans</button>
+  </section>
+
+  <!-- =================== SCREEN 5 : PROJECTION FUTURE =================== -->
+  <section class="screen" id="screen-5">
+    <div class="eyebrow">Étape 3 · Ta projection</div>
+    <h1>Et dans <span class="gradient">15 ans</span>, tu seras où&nbsp;?</h1>
+    <p class="lead">Tout part de toi, aujourd'hui. Chaque ligne représente une trajectoire possible.</p>
+
+    <div class="toggle-row">
+      <button type="button" class="toggle-btn active red" id="togRed" data-action="trajectory" data-target="red">Si rien ne change</button>
+      <button type="button" class="toggle-btn green" id="togGreen" data-action="trajectory" data-target="green">Si tu te reprends</button>
+    </div>
+
+    <div class="trajectory-wrap">
+      <div class="trajectory-header">
+        <div class="trajectory-title">Le moment présent &nbsp;→&nbsp; 15 ans</div>
+        <div class="trajectory-tag red" id="trajTag">scénario actuel</div>
+      </div>
+      <svg class="trajectory-svg" id="trajectorySvg" viewBox="0 0 360 280" aria-label="Projection sur 15 ans"></svg>
+    </div>
+
+    <div class="quote-block">
+      <div class="q-eyebrow">À retenir</div>
+      <p class="q-text" id="trajectoryQuote">Ton avenir est le résultat<br/>de tes <span class="gradient">choix d'aujourd'hui.</span></p>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-action="goto" data-target="6">Continuer</button>
+  </section>
+
+  <!-- =================== SCREEN 6 : ET SI TU CHANGEAIS ? =================== -->
+  <section class="screen" id="screen-6">
+    <div class="eyebrow">Une autre trajectoire</div>
+    <h1>Et si tu te donnais <span class="gradient">cette chance</span>&nbsp;?</h1>
+    <p class="lead">10 minutes par jour, accompagnée. C'est tout ce dont ton corps et ton mental ont besoin pour basculer.</p>
+
+    <div class="stack-list">
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="stack-text">
+          <div class="ttl">Sport doux & tonique</div>
+          <div class="sub">Pour réveiller ton corps sans le casser</div>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        </div>
+        <div class="stack-text">
+          <div class="ttl">Préparation mentale</div>
+          <div class="sub">Calmer la charge, gagner en clarté</div>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="stack-text">
+          <div class="ttl">Développement personnel</div>
+          <div class="sub">Réactiver ta confiance jour après jour</div>
+        </div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
+        </div>
+        <div class="stack-text">
+          <div class="ttl">Alimentation simple</div>
+          <div class="sub">Sans régime, sans frustration</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimo">
+      <div class="testimo-avatar">J</div>
+      <div class="testimo-content">
+        <p class="testimo-quote">"En 3 mois, j'ai retrouvé une énergie que je n'avais plus depuis mes 30 ans. Et surtout, j'ai retrouvé du temps pour moi."</p>
+        <div class="testimo-name">Johanna, 42 ans · Avocate</div>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-action="goto" data-target="7">Et avec moi à tes côtés…</button>
+  </section>
+
+  <!-- =================== SCREEN 7 : CAPTURE EMAIL =================== -->
+  <section class="screen" id="screen-7">
+    <div class="final-hero">
+      <div class="eyebrow">Une dernière chose</div>
+      <h1>Tu as fait <span class="gradient">le plus dur</span> : t'arrêter pour faire le point.</h1>
+      <p class="lead">Laisse-moi t'accompagner sur les prochaines étapes — par mail, sans pression, à ton rythme.</p>
+    </div>
+
+    <form class="email-form" id="emailForm" onsubmit="return false;">
+      <div class="form-row">
+        <label class="form-label" for="prenom">Ton prénom</label>
+        <input type="text" id="prenom" class="form-input" placeholder="Sophie" autocomplete="given-name" required />
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="email">Ton email</label>
+        <input type="email" id="email" class="form-input" placeholder="sophie@email.com" autocomplete="email" required />
+      </div>
+
+      <button type="button" class="btn btn-primary" id="submitForm" data-action="submitEmail">
+        Recevoir mes conseils gratuits
+      </button>
+      <p class="fineprint">Pas de spam. Désinscription en 1 clic. Tes infos restent privées.</p>
+    </form>
+
+    <div class="form-skip">
+      <button type="button" class="link-button" data-action="goto" data-target="8">
+        Passer cette étape →
+      </button>
+    </div>
+  </section>
+
+  <!-- =================== SCREEN 8 : CTA FINAL (3 boutons) =================== -->
+  <section class="screen" id="screen-8">
+    <div class="final-hero">
+      <div class="eyebrow" id="finalEyebrow">Bienvenue dans la famille</div>
+      <h1 id="finalTitle">Maintenant, <span class="gradient">choisis ta prochaine étape.</span></h1>
+      <p class="lead" id="finalLead">Trois portes s'ouvrent devant toi. Prends celle qui te parle aujourd'hui.</p>
+    </div>
+
+    <div class="cta-cards">
+      <a href="https://paulrecinos-coach.com/accompagnement-90-jours.html" class="cta-card cta-card-premium" target="_blank" rel="noopener">
+        <div class="cta-card-emoji">💎</div>
+        <div class="cta-card-eyebrow">Suivi humain · 90 jours</div>
+        <div class="cta-card-title">Je veux être suivie par Polito</div>
+        <div class="cta-card-desc">Un vrai coach humain à tes côtés, pour celles qui sentent que c'est leur moment.</div>
+        <div class="cta-card-tag">À partir de 3,30€ / jour</div>
+      </a>
+
+      <a href="https://apps.apple.com/fr/app/longevit%C3%A9-sport/id6761455014" class="cta-card cta-card-app" target="_blank" rel="noopener">
+        <div class="cta-card-emoji">📲</div>
+        <div class="cta-card-eyebrow">Application · iOS</div>
+        <div class="cta-card-title">Télécharger l'app Longévité Sport</div>
+        <div class="cta-card-desc">10 minutes par jour, à ton rythme. Sport doux ou tonique, mental, alimentation.</div>
+        <div class="cta-card-tag">Gratuit · Téléchargement immédiat</div>
+      </a>
+
+      <a href="https://www.facebook.com/groups/methodelongevite/" class="cta-card cta-card-community" target="_blank" rel="noopener">
+        <div class="cta-card-emoji">💬</div>
+        <div class="cta-card-eyebrow">Communauté · Facebook</div>
+        <div class="cta-card-title">Rejoindre le groupe privé</div>
+        <div class="cta-card-desc">Des femmes qui vivent la même chose que toi. Tu n'es plus jamais seule.</div>
+        <div class="cta-card-tag">Gratuit · Bienveillant</div>
+      </a>
+    </div>
+
+    <div class="signature">
+      <div class="sig-avatar">P</div>
+      <div class="sig-text">
+        <strong>Paul "Polito" Recinos</strong><br/>
+        Coach Longévité Sport
+      </div>
+    </div>
+
+    <p class="fineprint" style="margin-top: 20px;">Tu peux refaire ce bilan quand tu veux. Tes réponses restent privées.</p>
+  </section>
+
+</div>
+
+<script>
+const TOTAL_SCREENS = 9;
+const PROGRESS_STEPS = 5;
+const SCREEN_TO_STEP = [1, 1, 2, 2, 3, 4, 5, 5, 5];
+
+// Configuration Brevo
+const BREVO_LIST_ID = 3; // Liste #3 = pré-inscrites
+const BREVO_ENDPOINT = '/.netlify/functions/brevo-subscribe';
+
+const WHEEL_AXES = [
+  { key: 'sante',    label: 'Santé & bien-être' },
+  { key: 'sport',    label: 'Sport & activité' },
+  { key: 'epanou',   label: 'Épanouissement' },
+  { key: 'travail',  label: 'Travail & carrière' },
+  { key: 'famille',  label: 'Famille' },
+  { key: 'amis',     label: 'Amis & social' },
+  { key: 'couple',   label: 'Couple' },
+  { key: 'dev',      label: 'Développement perso' },
+  { key: 'interieur',label: 'Équilibre intérieur' },
+  { key: 'maison',   label: 'Maison & cadre' },
+];
+
+const ATTENTION_OUT = [
+  { key: 'reseaux',  label: 'Réseaux sociaux' },
+  { key: 'tele',     label: 'TV & streaming' },
+  { key: 'travail',  label: 'Travail' },
+  { key: 'stress',   label: 'Stress & charge mentale' },
+  { key: 'notifs',   label: 'Notifications' },
+  { key: 'oblig',    label: 'Obligations extérieures' },
+  { key: 'famille',  label: 'Famille (charge)' },
+];
+const ATTENTION_IN = [
+  { key: 'sport',    label: 'Sport' },
+  { key: 'soi',      label: 'Temps pour toi' },
+  { key: 'dev',      label: 'Développement perso' },
+  { key: 'medit',    label: 'Calme & méditation' },
+  { key: 'sommeil',  label: 'Sommeil de qualité' },
+  { key: 'sante',    label: 'Santé & nutrition' },
+  { key: 'plaisir',  label: 'Plaisirs simples' },
+];
+
+const state = {
+  current: 0,
+  wheel: Object.fromEntries(WHEEL_AXES.map(a => [a.key, 0])),
+  wheelTouched: Object.fromEntries(WHEEL_AXES.map(a => [a.key, false])),
+  attention: Object.fromEntries([...ATTENTION_OUT, ...ATTENTION_IN].map(a => [a.key, 0])),
+  attentionTouched: Object.fromEntries([...ATTENTION_OUT, ...ATTENTION_IN].map(a => [a.key, false])),
+  trajectory: 'red',
+};
+
+function init() {
+  buildProgress();
+  buildWheelSliders();
+  buildAttentionSliders();
+  drawRadar('wheelRadar', WHEEL_AXES, state.wheel, false);
+  drawRadar('attentionRadar', [...ATTENTION_OUT, ...ATTENTION_IN], state.attention, false);
+  updateStep();
+}
+
+function buildProgress() {
+  const p = document.getElementById('progress');
+  let html = '';
+  for (let i = 0; i < PROGRESS_STEPS; i++) html += '<div class="bar" data-i="' + i + '"></div>';
+  p.innerHTML = html;
+}
+
+function updateStep() {
+  const step = SCREEN_TO_STEP[state.current];
+  document.getElementById('stepCount').textContent = 'Étape ' + step + '/' + PROGRESS_STEPS;
+  document.querySelectorAll('.progress .bar').forEach((b, i) => {
+    b.classList.remove('active', 'done');
+    if (i + 1 < step) b.classList.add('done');
+    else if (i + 1 === step) b.classList.add('active');
+  });
+}
+
+function goTo(idx) {
+  document.getElementById('screen-' + state.current).classList.remove('active');
+  state.current = idx;
+  document.getElementById('screen-' + idx).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  updateStep();
+}
+
+/* ===== SLIDERS ===== */
+function buildSliderRow(item, group) {
+  const div = document.createElement('div');
+  div.className = 'slider-row';
+  div.dataset.key = item.key;
+  div.dataset.group = group;
+  div.innerHTML =
+    '<div class="label">' +
+      '<span class="name">' + item.label + '</span>' +
+      '<span class="value" id="' + group + '-val-' + item.key + '">—</span>' +
+    '</div>' +
+    '<div class="scale" id="' + group + '-scale-' + item.key + '"></div>';
+  const scale = div.querySelector('.scale');
+  for (let i = 1; i <= 10; i++) {
+    const pip = document.createElement('button');
+    pip.className = 'pip';
+    pip.setAttribute('aria-label', item.label + ' note ' + i);
+    pip.addEventListener('click', () => setScore(group, item.key, i));
+    scale.appendChild(pip);
+  }
+  return div;
+}
+
+function buildWheelSliders() {
+  const c = document.getElementById('wheelSliders');
+  WHEEL_AXES.forEach(a => c.appendChild(buildSliderRow(a, 'wheel')));
+}
+
+function buildAttentionSliders() {
+  const out = document.getElementById('attentionOut');
+  const inS = document.getElementById('attentionIn');
+  ATTENTION_OUT.forEach(a => out.appendChild(buildSliderRow(a, 'attention')));
+  ATTENTION_IN.forEach(a => inS.appendChild(buildSliderRow(a, 'attention')));
+}
+
+function setScore(group, key, value) {
+  if (group === 'wheel') {
+    state.wheel[key] = value;
+    state.wheelTouched[key] = true;
+  } else {
+    state.attention[key] = value;
+    state.attentionTouched[key] = true;
+  }
+  paintScale(group, key, value);
+  updateRowValue(group, key, value);
+  if (group === 'wheel') {
+    drawRadar('wheelRadar', WHEEL_AXES, state.wheel, false);
+    const allTouched = Object.values(state.wheelTouched).every(Boolean);
+    document.getElementById('wheelNext').disabled = !allTouched;
+  } else {
+    drawRadar('attentionRadar', [...ATTENTION_OUT, ...ATTENTION_IN], state.attention, false);
+    const allTouched = Object.values(state.attentionTouched).every(Boolean);
+    document.getElementById('attentionNext').disabled = !allTouched;
+  }
+}
+
+function paintScale(group, key, value) {
+  const scale = document.getElementById(group + '-scale-' + key);
+  const pips = scale.querySelectorAll('.pip');
+  let colorClass = 'low';
+  if (value >= 7) colorClass = 'high';
+  else if (value >= 4) colorClass = 'mid';
+  pips.forEach((p, i) => {
+    p.classList.remove('filled', 'low', 'mid', 'high');
+    if (i < value) {
+      p.classList.add('filled', colorClass);
+    }
+  });
+}
+
+function updateRowValue(group, key, value) {
+  const el = document.getElementById(group + '-val-' + key);
+  el.textContent = value;
+  el.parentElement.parentElement.classList.add('scored');
+}
+
+/* ===== RADAR ===== */
+function drawRadar(svgId, axes, values, isResult) {
+  const svg = document.getElementById(svgId);
+  const W = 340, H = 340;
+  const cx = W/2, cy = H/2;
+  const R = 115;
+  const N = axes.length;
+
+  let html = '';
+  // Concentric rings
+  for (let r = 1; r <= 5; r++) {
+    html += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (R * r / 5) + '" class="radar-grid-line"/>';
+  }
+  // Axes spokes
+  for (let i = 0; i < N; i++) {
+    const a = (Math.PI * 2 * i / N) - Math.PI/2;
+    const x = cx + Math.cos(a) * R;
+    const y = cy + Math.sin(a) * R;
+    html += '<line x1="' + cx + '" y1="' + cy + '" x2="' + x + '" y2="' + y + '" class="radar-grid-line"/>';
+  }
+  // Filled polygon
+  const pts = axes.map((ax, i) => {
+    const v = values[ax.key] || 0;
+    const a = (Math.PI * 2 * i / N) - Math.PI/2;
+    const r = (R * v / 10);
+    const x = cx + Math.cos(a) * r;
+    const y = cy + Math.sin(a) * r;
+    return x + ',' + y;
+  }).join(' ');
+  html += '<polygon points="' + pts + '" class="radar-fill"/>';
+  // Dots
+  axes.forEach((ax, i) => {
+    const v = values[ax.key] || 0;
+    if (v === 0) return;
+    const a = (Math.PI * 2 * i / N) - Math.PI/2;
+    const r = (R * v / 10);
+    const x = cx + Math.cos(a) * r;
+    const y = cy + Math.sin(a) * r;
+    html += '<circle cx="' + x + '" cy="' + y + '" r="3.5" class="radar-point"/>';
+  });
+  // Labels
+  axes.forEach((ax, i) => {
+    const a = (Math.PI * 2 * i / N) - Math.PI/2;
+    const lr = R + 18;
+    let x = cx + Math.cos(a) * lr;
+    let y = cy + Math.sin(a) * lr;
+    let anchor = 'middle';
+    if (Math.cos(a) > 0.3) anchor = 'start';
+    else if (Math.cos(a) < -0.3) anchor = 'end';
+    const label = ax.label.length > 14 ? ax.label.split(' ')[0] : ax.label;
+    html += '<text x="' + x + '" y="' + (y+3) + '" text-anchor="' + anchor + '" class="radar-axis-label">' + label + '</text>';
+  });
+  svg.innerHTML = html;
+}
+
+/* ===== WHEEL RESULT ===== */
+function finishWheel() {
+  // Build result screen content
+  drawRadar('wheelRadarResult', WHEEL_AXES, state.wheel, true);
+  const vals = WHEEL_AXES.map(a => state.wheel[a.key]);
+  const avg = vals.reduce((s, v) => s + v, 0) / vals.length;
+  const max = Math.max(...vals);
+  const min = Math.min(...vals);
+  document.getElementById('wheelAvg').textContent = avg.toFixed(1);
+  document.getElementById('wheelGap').textContent = (max - min);
+
+  // strong & weak
+  const sorted = [...WHEEL_AXES].map(a => ({ ...a, v: state.wheel[a.key] })).sort((x, y) => y.v - x.v);
+  const strong = sorted.filter(a => a.v >= 7);
+  const weak = sorted.filter(a => a.v <= 4).reverse();
+  document.getElementById('strongCount').textContent = strong.length;
+  document.getElementById('weakCount').textContent = weak.length;
+  document.getElementById('strongTags').innerHTML = strong.length
+    ? strong.map(a => '<span class="tag"><span class="dot vert"></span>' + a.label + ' · ' + a.v + '</span>').join('')
+    : '<div style="font-size:13px;color:var(--gris);">Aucun axe au-dessus de 7 pour l\'instant.</div>';
+  document.getElementById('weakTags').innerHTML = weak.length
+    ? weak.map(a => '<span class="tag"><span class="dot rouge"></span>' + a.label + ' · ' + a.v + '</span>').join('')
+    : '<div style="font-size:13px;color:var(--gris);">Aucun axe en dessous de 4. Belle base.</div>';
+
+  // Insight
+  document.getElementById('wheelInsight').innerHTML = buildWheelInsight(avg, strong, weak);
+
+  goTo(2);
+}
+
+function buildWheelInsight(avg, strong, weak) {
+  if (avg >= 7.5) {
+    return 'Ta roue est <strong>belle et équilibrée</strong>. Tu sembles bien dans ta vie. La question maintenant : comment tenir cet équilibre dans la durée, sans s\'épuiser&nbsp;?';
+  }
+  if (avg >= 5.5) {
+    const w = weak.length ? weak[0].label.toLowerCase() : 'certains domaines';
+    return 'Tu tiens debout, mais ton énergie est <strong>inégalement répartie</strong>. ' + w + ' demande clairement plus d\'attention. C\'est souvent là que se joue la prochaine étape.';
+  }
+  if (avg >= 3.5) {
+    return 'Ton énergie semble principalement dirigée vers les <strong>obligations extérieures</strong>. Ton corps et ton mental demandent davantage d\'attention — et ça commence par <strong>10 minutes par jour</strong>, juste pour toi.';
+  }
+  return 'Tu es en <strong>déséquilibre profond</strong>. Ce n\'est pas une fatalité — c\'est un signal. Ton corps te demande de t\'arrêter, et de revenir à toi. C\'est exactement pour ça que ce parcours existe.';
+}
+
+/* ===== ATTENTION RESULT ===== */
+function finishAttention() {
+  drawRadar('attentionRadarResult', [...ATTENTION_OUT, ...ATTENTION_IN], state.attention, true);
+  const outAvg = ATTENTION_OUT.reduce((s, a) => s + state.attention[a.key], 0) / ATTENTION_OUT.length;
+  const inAvg = ATTENTION_IN.reduce((s, a) => s + state.attention[a.key], 0) / ATTENTION_IN.length;
+  document.getElementById('attOut').textContent = outAvg.toFixed(1);
+  document.getElementById('attIn').textContent = inAvg.toFixed(1);
+
+  document.getElementById('attentionInsight').innerHTML = buildAttentionInsight(outAvg, inAvg);
+  goTo(4);
+}
+
+function buildAttentionInsight(out, inn) {
+  const gap = out - inn;
+  if (gap >= 4) {
+    return 'Ton énergie part <strong>massivement vers l\'extérieur</strong>. Écrans, charges, obligations. Tu te donnes peu, voire pas du tout, à toi-même. C\'est le terrain typique de l\'épuisement.';
+  }
+  if (gap >= 2) {
+    return 'Ton attention est <strong>tirée vers l\'extérieur</strong> plus que vers toi. Pas dramatique, mais à surveiller. Quelques minutes par jour pour ton corps et ton mental changeraient déjà beaucoup de choses.';
+  }
+  if (gap >= 0) {
+    return 'Tu fais déjà l\'effort de te <strong>garder du temps</strong>. La marge de progression est dans la <strong>régularité</strong>, et la qualité de ces moments pour toi.';
+  }
+  return 'Tu prends soin de toi — c\'est rare et précieux. La question devient : <strong>comment soutenir cet équilibre</strong> dans les périodes plus chargées&nbsp;?';
+}
+
+/* ===== TRAJECTORY ===== */
+function buildTrajectory() {
+  const svg = document.getElementById('trajectorySvg');
+  const W = 360, H = 280;
+  const cx = 40, cy = H/2;
+  const endX = W - 20;
+  const labels = ['5 ans', '10 ans', '15 ans'];
+  const xMarks = [cx + (endX - cx) * 0.33, cx + (endX - cx) * 0.66, endX];
+
+  const greenLabels = ['Sérénité', 'Énergie', 'Motivation', 'Confiance', 'Équilibre'];
+  const redLabels = ['Stress', 'Fatigue', 'Procrastination', 'Anxiété', 'Épuisement'];
+
+  // For red scenario: green lines drop, red lines rise
+  // For green scenario: green lines rise, red lines drop
+  const isGreen = state.trajectory === 'green';
+
+  let html = '';
+
+  // Time gridlines
+  xMarks.forEach((x, i) => {
+    html += '<line x1="' + x + '" y1="20" x2="' + x + '" y2="' + (H-30) + '" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="3,4"/>';
+    html += '<text x="' + x + '" y="' + (H-12) + '" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="10" font-weight="700" letter-spacing="0.12em">' + labels[i].toUpperCase() + '</text>';
+  });
+
+  // Green lines (top)
+  for (let i = 0; i < 5; i++) {
+    const startY = cy - 6 - i * 4;
+    let endY;
+    if (isGreen) endY = 30 + i * 6; // rise (lower Y = higher)
+    else endY = cy - 14 + i * 3; // gentle drop / stagnate
+    // Curve
+    const c1x = cx + 80;
+    const c1y = startY + (endY - startY) * 0.2;
+    const c2x = endX - 80;
+    const c2y = endY;
+    html += '<path d="M ' + cx + ' ' + startY + ' C ' + c1x + ' ' + c1y + ', ' + c2x + ' ' + c2y + ', ' + endX + ' ' + endY + '" stroke="url(#greenLine)" stroke-width="' + (isGreen ? 2.2 : 1.2) + '" fill="none" opacity="' + (isGreen ? 0.9 : 0.35) + '" stroke-linecap="round"/>';
+    // Endpoint dot
+    html += '<circle cx="' + endX + '" cy="' + endY + '" r="' + (isGreen ? 4 : 2.5) + '" fill="#B0F081" opacity="' + (isGreen ? 1 : 0.45) + '"/>';
+    // Label at end
+    if (isGreen) {
+      html += '<text x="' + (endX - 8) + '" y="' + (endY + 3) + '" text-anchor="end" fill="#B0F081" font-size="9.5" font-weight="700">' + greenLabels[i] + '</text>';
+    }
+  }
+
+  // Red lines (bottom)
+  for (let i = 0; i < 5; i++) {
+    const startY = cy + 6 + i * 4;
+    let endY;
+    if (isGreen) endY = cy + 14 - i * 3 + 20; // drop toward equilibrium
+    else endY = H - 50 - i * 6; // rise dramatically (higher Y = bigger problem visually because below)
+    const c1x = cx + 80;
+    const c1y = startY + (endY - startY) * 0.2;
+    const c2x = endX - 80;
+    const c2y = endY;
+    html += '<path d="M ' + cx + ' ' + startY + ' C ' + c1x + ' ' + c1y + ', ' + c2x + ' ' + c2y + ', ' + endX + ' ' + endY + '" stroke="url(#redLine)" stroke-width="' + (isGreen ? 1.2 : 2.2) + '" fill="none" opacity="' + (isGreen ? 0.35 : 0.9) + '" stroke-linecap="round"/>';
+    html += '<circle cx="' + endX + '" cy="' + endY + '" r="' + (isGreen ? 2.5 : 4) + '" fill="#FF8A8A" opacity="' + (isGreen ? 0.45 : 1) + '"/>';
+    if (!isGreen) {
+      html += '<text x="' + (endX - 8) + '" y="' + (endY + 3) + '" text-anchor="end" fill="#FF8A8A" font-size="9.5" font-weight="700">' + redLabels[i] + '</text>';
+    }
+  }
+
+  // Center glow point
+  html += '<circle cx="' + cx + '" cy="' + cy + '" r="22" fill="url(#centerGlow)" opacity="0.25"/>';
+  html += '<circle cx="' + cx + '" cy="' + cy + '" r="8" fill="url(#centerGlow)"/>';
+  html += '<circle cx="' + cx + '" cy="' + cy + '" r="3" fill="white"/>';
+  // Center label
+  html += '<text x="' + cx + '" y="' + (cy + 38) + '" text-anchor="middle" fill="white" font-size="9.5" font-weight="800" letter-spacing="0.14em">AUJOURD\'HUI</text>';
+
+  svg.innerHTML = html;
+}
+
+function switchTrajectory(which) {
+  state.trajectory = which;
+  document.getElementById('togRed').classList.toggle('active', which === 'red');
+  document.getElementById('togGreen').classList.toggle('active', which === 'green');
+  const tag = document.getElementById('trajTag');
+  tag.className = 'trajectory-tag ' + which;
+  tag.textContent = which === 'red' ? 'scénario actuel' : 'avec un suivi';
+  const q = document.getElementById('trajectoryQuote');
+  if (which === 'green') {
+    q.innerHTML = 'Et si tu te donnais<br/>cette <span class="gradient">chance de changer</span>&nbsp;?';
+  } else {
+    q.innerHTML = 'Ton avenir est le résultat<br/>de tes <span class="gradient">choix d\'aujourd\'hui.</span>';
+  }
+  buildTrajectory();
+}
+
+/* ===== INSCRIPTION BREVO ===== */
+async function handleEmailSubmit() {
+  const prenomEl = document.getElementById('prenom');
+  const emailEl = document.getElementById('email');
+  const submitBtn = document.getElementById('submitForm');
+  const form = document.getElementById('emailForm');
+
+  const prenom = (prenomEl.value || '').trim();
+  const email = (emailEl.value || '').trim();
+
+  // Validation simple
+  if (!prenom) {
+    prenomEl.focus();
+    prenomEl.style.borderColor = 'var(--rouge)';
+    setTimeout(() => { prenomEl.style.borderColor = ''; }, 2000);
+    return;
+  }
+  if (!email || !email.includes('@') || !email.includes('.')) {
+    emailEl.focus();
+    emailEl.style.borderColor = 'var(--rouge)';
+    setTimeout(() => { emailEl.style.borderColor = ''; }, 2000);
+    return;
+  }
+
+  // UI loading state
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Inscription en cours…';
+
+  try {
+    const response = await fetch(BREVO_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        firstName: prenom,
+        attributes: { PRENOM: prenom, FIRSTNAME: prenom },
+        listIds: [BREVO_LIST_ID],
+      }),
+    });
+
+    // Succès = on continue vers les CTA, même si réponse imparfaite
+    // (la fonction Netlify renvoie parfois 200 sans body strict)
+    customizeFinalScreen(prenom, true);
+  } catch (err) {
+    console.log('Inscription Brevo échouée (silencieux):', err);
+    // En cas d'échec réseau, on continue quand même — pas envie de bloquer l'utilisatrice
+    customizeFinalScreen(prenom, false);
+  }
+
+  // On passe à l'écran final dans tous les cas
+  setTimeout(() => goTo(8), 400);
+}
+
+function customizeFinalScreen(prenom, success) {
+  if (success && prenom) {
+    document.getElementById('finalEyebrow').textContent = 'Inscription confirmée';
+    document.getElementById('finalTitle').innerHTML = 'Bienvenue ' + escapeHtml(prenom) + '. <span class="gradient">À toi de choisir maintenant.</span>';
+    document.getElementById('finalLead').textContent = 'Tu vas recevoir un premier email de ma part dans les prochaines minutes. En attendant, voilà trois portes possibles.';
+  } else if (prenom) {
+    document.getElementById('finalTitle').innerHTML = 'À toi de jouer, ' + escapeHtml(prenom) + '. <span class="gradient">Trois portes possibles.</span>';
+  }
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// Init
+init();
+buildTrajectory();
+
+// ===== EVENT DELEGATION (iOS Safari friendly) =====
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  if (btn.disabled) return;
+  const action = btn.dataset.action;
+  const target = btn.dataset.target;
+  if (action === 'goto') goTo(parseInt(target, 10));
+  else if (action === 'finishWheel') finishWheel();
+  else if (action === 'finishAttention') finishAttention();
+  else if (action === 'trajectory') switchTrajectory(target);
+  else if (action === 'submitEmail') handleEmailSubmit();
+});
+
+// Enter key to submit form
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && state.current === 7) {
+    e.preventDefault();
+    handleEmailSubmit();
+  }
+});
+</script>
+
+</body>
+</html>
