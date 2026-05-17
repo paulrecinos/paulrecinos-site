@@ -822,6 +822,186 @@ h2 {
   background: rgba(17, 24, 39, 0.08);
   color: var(--navy-soft);
 }
+
+/* ===== SECTION PARTAGE / TÉLÉCHARGEMENT ===== */
+.share-section {
+  margin: 28px 0 20px;
+}
+.share-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.share-buttons .btn-ghost {
+  padding: 14px 18px;
+  font-size: 15px;
+}
+
+/* ===== STYLE D'IMPRESSION PDF ===== */
+@media print {
+  body {
+    background: white !important;
+    color: var(--navy) !important;
+  }
+  body::before, body::after { display: none !important; }
+  .app {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+  .header, .progress, .screen { display: none !important; }
+  .screen.print-show { display: block !important; }
+  .pdf-page {
+    page-break-after: always;
+    padding: 30px 32px;
+  }
+  .pdf-page:last-child { page-break-after: auto; }
+  .pdf-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid var(--rose);
+  }
+  .pdf-logo {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--navy);
+  }
+  .pdf-logo .accent { color: var(--rose); }
+  .pdf-date {
+    font-size: 12px;
+    color: var(--gris);
+    font-weight: 600;
+  }
+  .pdf-title {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--navy);
+    margin: 0 0 8px;
+  }
+  .pdf-title .gradient {
+    color: var(--rose) !important;
+    -webkit-text-fill-color: var(--rose) !important;
+  }
+  .pdf-subtitle {
+    font-size: 14px;
+    color: var(--gris);
+    margin-bottom: 24px;
+  }
+  .pdf-section { margin-bottom: 22px; }
+  .pdf-section-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 10px;
+  }
+  .pdf-stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .pdf-stat {
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .pdf-stat-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gris);
+  }
+  .pdf-stat-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-top: 4px;
+  }
+  .pdf-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .pdf-bar-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 32px;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+  }
+  .pdf-bar-label { font-weight: 600; color: var(--navy); }
+  .pdf-bar-track {
+    height: 8px;
+    border-radius: 4px;
+    background: #E5E7EB;
+    overflow: hidden;
+  }
+  .pdf-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rose), var(--corail));
+    border-radius: 4px;
+  }
+  .pdf-bar-fill.green { background: var(--vert-fonce); }
+  .pdf-bar-fill.red { background: var(--rouge); }
+  .pdf-bar-fill.orange { background: var(--corail); }
+  .pdf-bar-value {
+    font-weight: 700;
+    color: var(--navy);
+    text-align: right;
+    font-size: 12px;
+  }
+  .pdf-message {
+    background: #FFF5F0;
+    border-left: 4px solid var(--rose);
+    padding: 14px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--navy);
+  }
+  .pdf-footer {
+    margin-top: 30px;
+    padding-top: 16px;
+    border-top: 1px solid #E5E7EB;
+    text-align: center;
+    font-size: 11px;
+    color: var(--gris);
+  }
+  .pdf-cta-box {
+    margin-top: 20px;
+    padding: 16px;
+    background: linear-gradient(135deg, #FFF0F5, #FFF5ED);
+    border-radius: 12px;
+    text-align: center;
+  }
+  .pdf-cta-box h3 {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--navy);
+    margin: 0 0 6px;
+  }
+  .pdf-cta-box p {
+    font-size: 12px;
+    color: var(--navy-soft);
+    margin: 0;
+  }
+  .pdf-cta-box a {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--rose);
+    text-decoration: none;
+  }
+}
 </style>
 </head>
 <body>
@@ -1140,6 +1320,18 @@ h2 {
       </a>
     </div>
 
+    <div class="share-section">
+      <div class="section-title">Garde ton bilan</div>
+      <div class="share-buttons">
+        <button type="button" class="btn btn-ghost" data-action="downloadPDF">
+          📄&nbsp;&nbsp;Télécharger mon bilan
+        </button>
+        <button type="button" class="btn btn-ghost" data-action="shareWithFriend">
+          💌&nbsp;&nbsp;Partager avec une amie
+        </button>
+      </div>
+    </div>
+
     <div class="signature">
       <div class="sig-avatar">P</div>
       <div class="sig-text">
@@ -1149,6 +1341,58 @@ h2 {
     </div>
 
     <p class="fineprint" style="margin-top: 20px;">Tu peux refaire ce bilan quand tu veux. Tes réponses restent privées.</p>
+  </section>
+
+  <!-- =================== PDF (caché à l'écran, visible à l'impression) =================== -->
+  <section class="screen print-show" id="pdfPage" style="display:none;">
+    <div class="pdf-page">
+      <div class="pdf-header">
+        <div class="pdf-logo">Longévité&nbsp;<span class="accent">Sport</span></div>
+        <div class="pdf-date" id="pdfDate">—</div>
+      </div>
+
+      <h1 class="pdf-title">Le bilan de <span class="gradient" id="pdfName">—</span></h1>
+      <p class="pdf-subtitle">Roue de vie · Cercle d'attention · Projection sur 15 ans</p>
+
+      <div class="pdf-section">
+        <div class="pdf-section-title">Vue d'ensemble</div>
+        <div class="pdf-stat-grid">
+          <div class="pdf-stat">
+            <div class="pdf-stat-label">Équilibre de vie</div>
+            <div class="pdf-stat-value" id="pdfAvg">—</div>
+          </div>
+          <div class="pdf-stat">
+            <div class="pdf-stat-label">Situation actuelle</div>
+            <div class="pdf-stat-value" id="pdfLevel">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdf-section">
+        <div class="pdf-section-title">Ta roue de vie</div>
+        <div class="pdf-bars" id="pdfWheelBars"></div>
+      </div>
+
+      <div class="pdf-section">
+        <div class="pdf-section-title">Où va ton attention</div>
+        <div class="pdf-bars" id="pdfAttentionBars"></div>
+      </div>
+
+      <div class="pdf-section">
+        <div class="pdf-section-title">Message personnalisé</div>
+        <div class="pdf-message" id="pdfMessage">—</div>
+      </div>
+
+      <div class="pdf-cta-box">
+        <h3>Tu veux aller plus loin&nbsp;?</h3>
+        <p>L'app Longévité Sport et un accompagnement humain par Polito.</p>
+        <a href="https://paulrecinos-coach.com">paulrecinos-coach.com</a>
+      </div>
+
+      <div class="pdf-footer">
+        Bilan réalisé sur paulrecinos-coach.com/mon-bilan · Coach Paul "Polito" Recinos
+      </div>
+    </div>
   </section>
 
 </div>
@@ -1296,9 +1540,24 @@ function setScore(group, key, value) {
 function paintScale(group, key, value) {
   const scale = document.getElementById(group + '-scale-' + key);
   const pips = scale.querySelectorAll('.pip');
-  let colorClass = 'low';
-  if (value >= 7) colorClass = 'high';
-  else if (value >= 4) colorClass = 'mid';
+
+  // Détermine si l'item est dans la catégorie "Énergie vers l'extérieur"
+  // Pour ces items, plus le score est élevé, plus c'est négatif (rouge)
+  const isOutwardEnergy = group === 'attention' && ATTENTION_OUT.some(a => a.key === key);
+
+  let colorClass;
+  if (isOutwardEnergy) {
+    // Palette inversée : plus on consomme, plus c'est rouge
+    if (value >= 7) colorClass = 'low';        // rouge
+    else if (value >= 4) colorClass = 'mid';   // orange
+    else colorClass = 'high';                  // vert
+  } else {
+    // Palette normale : plus c'est élevé, mieux c'est
+    if (value >= 7) colorClass = 'high';       // vert
+    else if (value >= 4) colorClass = 'mid';   // orange
+    else colorClass = 'low';                   // rouge
+  }
+
   pips.forEach((p, i) => {
     p.classList.remove('filled', 'low', 'mid', 'high');
     if (i < value) {
@@ -1392,15 +1651,31 @@ function finishWheel() {
     ? weak.map(a => '<span class="tag"><span class="dot rouge"></span>' + a.label + ' · ' + a.v + '</span>').join('')
     : '<div style="font-size:13px;color:var(--gris);">Aucun axe en dessous de 4. Belle base.</div>';
 
-  // Insight
-  document.getElementById('wheelInsight').innerHTML = buildWheelInsight(avg, strong, weak);
+  // Insight (on passe aussi gap=max-min pour détecter l'homogénéité)
+  const gap = max - min;
+  document.getElementById('wheelInsight').innerHTML = buildWheelInsight(avg, strong, weak, gap);
 
   goTo(2);
 }
 
-function buildWheelInsight(avg, strong, weak) {
+function buildWheelInsight(avg, strong, weak, gap) {
+  // Cas exceptionnel : vie très homogène (écart faible)
+  if (gap <= 2) {
+    if (avg >= 8) {
+      return 'Ta roue est <strong>remarquablement équilibrée</strong>, et à un haut niveau. Tu sembles vivre en cohérence avec toi-même. La vraie question : comment <strong>protéger cet équilibre</strong> dans la durée&nbsp;?';
+    }
+    if (avg >= 6) {
+      return 'Ta vie est <strong>très homogène</strong> — pas de domaine qui s\'effondre, pas de domaine qui explose. C\'est solide. Maintenant, peut-être que <strong>tirer un domaine vers le haut</strong> (ton corps, ton mental, ton temps pour toi) pourrait faire basculer le tout&nbsp;?';
+    }
+    if (avg >= 4) {
+      return 'Tes domaines sont <strong>au même niveau</strong>, et ce niveau est moyen. Ce n\'est pas une crise, mais ce n\'est pas non plus une vie épanouie. <strong>Un seul axe</strong> qui décolle peut faire bouger tout le reste.';
+    }
+    return 'Tu es <strong>uniformément épuisée</strong> sur tous les fronts. Ce n\'est pas une fatalité — c\'est un signal fort. Ton corps et ton mental demandent une pause, et un cadre. C\'est exactement pour ça que ce parcours existe.';
+  }
+
+  // Cas normaux (écart >= 3 = vie déséquilibrée)
   if (avg >= 7.5) {
-    return 'Ta roue est <strong>belle et équilibrée</strong>. Tu sembles bien dans ta vie. La question maintenant : comment tenir cet équilibre dans la durée, sans s\'épuiser&nbsp;?';
+    return 'Ta roue est <strong>belle et globalement épanouie</strong>. Tu sembles bien dans ta vie, même si certains domaines tirent moins que d\'autres. La question : comment <strong>tenir cet équilibre</strong> dans la durée&nbsp;?';
   }
   if (avg >= 5.5) {
     const w = weak.length ? weak[0].label.toLowerCase() : 'certains domaines';
@@ -1450,6 +1725,24 @@ function buildTrajectory() {
   const greenLabels = ['Sérénité', 'Énergie', 'Motivation', 'Confiance', 'Équilibre'];
   const redLabels = ['Stress', 'Fatigue', 'Procrastination', 'Anxiété', 'Épuisement'];
 
+  // ==== PERSONNALISATION selon les scores de l'utilisateur ====
+  // Score de "santé globale" issue de la roue de vie (0-10)
+  const wheelAvg = WHEEL_AXES.reduce((s, a) => s + (state.wheel[a.key] || 0), 0) / WHEEL_AXES.length;
+
+  // Score d'attention extérieure (énergie qui part dehors) (0-10)
+  const outAvg = ATTENTION_OUT.reduce((s, a) => s + (state.attention[a.key] || 0), 0) / ATTENTION_OUT.length;
+
+  // Score d'attention intérieure (temps pour soi) (0-10)
+  const inAvg = ATTENTION_IN.reduce((s, a) => s + (state.attention[a.key] || 0), 0) / ATTENTION_IN.length;
+
+  // Score "vulnérabilité" : combien la personne est exposée à un effondrement
+  // Plus la roue est basse + plus l'attention va dehors + moins on prend soin de soi = plus vulnérable (0-1)
+  const vulnerability = (
+    (10 - wheelAvg) * 0.4 +  // déséquilibre de vie
+    outAvg * 0.3 +            // énergie qui fuit
+    (10 - inAvg) * 0.3        // manque d'attention à soi
+  ) / 10;
+
   // For red scenario: green lines drop, red lines rise
   // For green scenario: green lines rise, red lines drop
   const isGreen = state.trajectory === 'green';
@@ -1462,12 +1755,19 @@ function buildTrajectory() {
     html += '<text x="' + x + '" y="' + (H-12) + '" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="10" font-weight="700" letter-spacing="0.12em">' + labels[i].toUpperCase() + '</text>';
   });
 
-  // Green lines (top)
+  // Green lines (top) — personnalisées
   for (let i = 0; i < 5; i++) {
     const startY = cy - 6 - i * 4;
     let endY;
-    if (isGreen) endY = 30 + i * 6; // rise (lower Y = higher)
-    else endY = cy - 14 + i * 3; // gentle drop / stagnate
+    if (isGreen) {
+      // Scenario "avec suivi" : monte d'autant plus haut qu'on partait bas
+      const climbAmount = 30 + (vulnerability * 25); // 30 à 55
+      endY = climbAmount + i * 6;
+    } else {
+      // Scenario "rien ne change" : descend d'autant plus que la situation est vulnérable
+      const dropAmount = vulnerability * 35; // 0 à 35 pixels de chute
+      endY = cy - 14 + i * 3 + dropAmount;
+    }
     // Curve
     const c1x = cx + 80;
     const c1y = startY + (endY - startY) * 0.2;
@@ -1482,12 +1782,19 @@ function buildTrajectory() {
     }
   }
 
-  // Red lines (bottom)
+  // Red lines (bottom) — personnalisées
   for (let i = 0; i < 5; i++) {
     const startY = cy + 6 + i * 4;
     let endY;
-    if (isGreen) endY = cy + 14 - i * 3 + 20; // drop toward equilibrium
-    else endY = H - 50 - i * 6; // rise dramatically (higher Y = bigger problem visually because below)
+    if (isGreen) {
+      // Scenario "avec suivi" : les rouges redescendent vers l'équilibre
+      const recoverAmount = vulnerability * 20; // plus on partait bas, plus on remonte
+      endY = cy + 14 - i * 3 + 20 + recoverAmount;
+    } else {
+      // Scenario "rien ne change" : les rouges explosent d'autant plus que la vulnérabilité est forte
+      const explodeAmount = 30 + (vulnerability * 30); // 30 à 60 pixels
+      endY = H - 50 - i * 6 + (10 - explodeAmount * 0.2);
+    }
     const c1x = cx + 80;
     const c1y = startY + (endY - startY) * 0.2;
     const c2x = endX - 80;
@@ -1505,6 +1812,16 @@ function buildTrajectory() {
   html += '<circle cx="' + cx + '" cy="' + cy + '" r="3" fill="white"/>';
   // Center label
   html += '<text x="' + cx + '" y="' + (cy + 38) + '" text-anchor="middle" fill="white" font-size="9.5" font-weight="800" letter-spacing="0.14em">AUJOURD\'HUI</text>';
+
+  // Indicateur "ton score actuel" en haut à gauche
+  let scoreLevel, scoreColor;
+  if (vulnerability < 0.35) { scoreLevel = 'Très solide'; scoreColor = '#B0F081'; }
+  else if (vulnerability < 0.55) { scoreLevel = 'À surveiller'; scoreColor = '#FFD580'; }
+  else if (vulnerability < 0.75) { scoreLevel = 'Fragilisée'; scoreColor = '#FFB07A'; }
+  else { scoreLevel = 'En alerte'; scoreColor = '#FF8A8A'; }
+
+  html += '<text x="' + cx + '" y="20" text-anchor="start" fill="rgba(255,255,255,0.5)" font-size="9" font-weight="700" letter-spacing="0.1em">TA SITUATION ACTUELLE</text>';
+  html += '<text x="' + cx + '" y="36" text-anchor="start" fill="' + scoreColor + '" font-size="14" font-weight="800">' + scoreLevel + '</text>';
 
   svg.innerHTML = html;
 }
@@ -1592,6 +1909,115 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
+/* ===== TÉLÉCHARGEMENT PDF ===== */
+function downloadPDF() {
+  // Récupère le prénom s'il a été saisi
+  const prenomInput = document.getElementById('prenom');
+  const prenom = (prenomInput && prenomInput.value || '').trim() || 'toi';
+
+  // Date du bilan
+  const today = new Date();
+  const dateStr = today.toLocaleDateString('fr-FR', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+  document.getElementById('pdfDate').textContent = dateStr;
+  document.getElementById('pdfName').textContent = prenom;
+
+  // Stats globales roue de vie
+  const wheelVals = WHEEL_AXES.map(a => state.wheel[a.key] || 0);
+  const wheelAvg = wheelVals.reduce((s, v) => s + v, 0) / wheelVals.length;
+  document.getElementById('pdfAvg').textContent = wheelAvg.toFixed(1) + ' / 10';
+
+  // Niveau de vulnérabilité (même calcul que la projection)
+  const outAvg = ATTENTION_OUT.reduce((s, a) => s + (state.attention[a.key] || 0), 0) / ATTENTION_OUT.length;
+  const inAvg = ATTENTION_IN.reduce((s, a) => s + (state.attention[a.key] || 0), 0) / ATTENTION_IN.length;
+  const vulnerability = ((10 - wheelAvg) * 0.4 + outAvg * 0.3 + (10 - inAvg) * 0.3) / 10;
+
+  let level;
+  if (vulnerability < 0.35) level = 'Très solide';
+  else if (vulnerability < 0.55) level = 'À surveiller';
+  else if (vulnerability < 0.75) level = 'Fragilisée';
+  else level = 'En alerte';
+  document.getElementById('pdfLevel').textContent = level;
+
+  // Barres roue de vie
+  const wheelBarsHtml = WHEEL_AXES.map(a => {
+    const v = state.wheel[a.key] || 0;
+    const cls = v >= 7 ? 'green' : v >= 4 ? 'orange' : 'red';
+    return '<div class="pdf-bar-row">' +
+      '<div class="pdf-bar-label">' + a.label + '</div>' +
+      '<div class="pdf-bar-track"><div class="pdf-bar-fill ' + cls + '" style="width:' + (v * 10) + '%"></div></div>' +
+      '<div class="pdf-bar-value">' + v + '/10</div>' +
+    '</div>';
+  }).join('');
+  document.getElementById('pdfWheelBars').innerHTML = wheelBarsHtml;
+
+  // Barres attention (énergie ext + énergie int)
+  const attentionItems = [...ATTENTION_OUT, ...ATTENTION_IN];
+  const attentionBarsHtml = attentionItems.map(a => {
+    const v = state.attention[a.key] || 0;
+    const isOutward = ATTENTION_OUT.some(x => x.key === a.key);
+    let cls;
+    if (isOutward) {
+      cls = v >= 7 ? 'red' : v >= 4 ? 'orange' : 'green';
+    } else {
+      cls = v >= 7 ? 'green' : v >= 4 ? 'orange' : 'red';
+    }
+    return '<div class="pdf-bar-row">' +
+      '<div class="pdf-bar-label">' + a.label + '</div>' +
+      '<div class="pdf-bar-track"><div class="pdf-bar-fill ' + cls + '" style="width:' + (v * 10) + '%"></div></div>' +
+      '<div class="pdf-bar-value">' + v + '/10</div>' +
+    '</div>';
+  }).join('');
+  document.getElementById('pdfAttentionBars').innerHTML = attentionBarsHtml;
+
+  // Message personnalisé
+  const max = Math.max(...wheelVals);
+  const min = Math.min(...wheelVals);
+  const gap = max - min;
+  const sorted = [...WHEEL_AXES].map(a => ({ ...a, v: state.wheel[a.key] })).sort((x, y) => y.v - x.v);
+  const strong = sorted.filter(a => a.v >= 7);
+  const weak = sorted.filter(a => a.v <= 4).reverse();
+  const insightHTML = buildWheelInsight(wheelAvg, strong, weak, gap);
+  // Strip HTML tags pour le PDF
+  document.getElementById('pdfMessage').innerHTML = insightHTML;
+
+  // Petite pause pour que le DOM soit prêt, puis impression
+  setTimeout(() => {
+    window.print();
+  }, 200);
+}
+
+/* ===== PARTAGE AVEC UNE AMIE ===== */
+function shareWithFriend() {
+  const shareUrl = 'https://paulrecinos-coach.com/mon-bilan';
+  const shareText = "J'ai fait ce bilan rapide sur ma vie et ma santé, je te le recommande vraiment 💪\n\n";
+
+  // Si le navigateur supporte l'API Web Share (mobile principalement)
+  if (navigator.share) {
+    navigator.share({
+      title: 'Le bilan Longévité Sport',
+      text: shareText,
+      url: shareUrl,
+    }).catch(err => {
+      // L'utilisateur a annulé, ou erreur
+      if (err.name !== 'AbortError') console.log('Share error:', err);
+    });
+  } else {
+    // Fallback desktop : copier l'URL dans le presse-papier
+    const fullText = shareText + shareUrl;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(fullText).then(() => {
+        alert('✨ Le lien a été copié !\n\nTu peux maintenant le coller dans WhatsApp, SMS, ou un mail pour le partager avec une amie.');
+      }).catch(() => {
+        prompt('Copie ce lien et envoie-le à une amie :', shareUrl);
+      });
+    } else {
+      prompt('Copie ce lien et envoie-le à une amie :', shareUrl);
+    }
+  }
+}
+
 // Init
 init();
 buildTrajectory();
@@ -1608,6 +2034,8 @@ document.addEventListener('click', function(e) {
   else if (action === 'finishAttention') finishAttention();
   else if (action === 'trajectory') switchTrajectory(target);
   else if (action === 'submitEmail') handleEmailSubmit();
+  else if (action === 'downloadPDF') downloadPDF();
+  else if (action === 'shareWithFriend') shareWithFriend();
 });
 
 // Enter key to submit form
