@@ -837,6 +837,11 @@ h2 {
   font-size: 15px;
 }
 
+/* ===== AFFICHAGE PDF (caché à l'écran) ===== */
+.pdf-only {
+  display: none;
+}
+
 /* ===== STYLE D'IMPRESSION PDF ===== */
 @media print {
   body {
@@ -848,8 +853,12 @@ h2 {
     max-width: 100% !important;
     padding: 0 !important;
   }
+  /* Cache tout sauf le PDF */
   .header, .progress, .screen { display: none !important; }
-  .screen.print-show { display: block !important; }
+  /* Affiche UNIQUEMENT la section PDF */
+  .pdf-only {
+    display: block !important;
+  }
   .pdf-page {
     page-break-after: always;
     padding: 30px 32px;
@@ -1344,7 +1353,7 @@ h2 {
   </section>
 
   <!-- =================== PDF (caché à l'écran, visible à l'impression) =================== -->
-  <section class="screen print-show" id="pdfPage" style="display:none;">
+  <section class="pdf-only" id="pdfPage" aria-hidden="true">
     <div class="pdf-page">
       <div class="pdf-header">
         <div class="pdf-logo">Longévité&nbsp;<span class="accent">Sport</span></div>
