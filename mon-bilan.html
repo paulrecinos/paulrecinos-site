@@ -844,6 +844,12 @@ h2 {
 
 /* ===== STYLE D'IMPRESSION PDF ===== */
 @media print {
+  /* Forcer Chrome/Safari à imprimer les couleurs */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
   body {
     background: white !important;
     color: var(--navy) !important;
@@ -1010,6 +1016,135 @@ h2 {
     color: var(--rose);
     text-decoration: none;
   }
+
+  /* ===== RADAR SVG ===== */
+  .pdf-radar-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 18px;
+  }
+  .pdf-radar {
+    width: 320px;
+    height: 320px;
+    max-width: 100%;
+  }
+  .pdf-radar-grid {
+    fill: none;
+    stroke: #E5E7EB;
+    stroke-width: 1;
+  }
+  .pdf-radar-fill {
+    fill: rgba(255, 79, 139, 0.18);
+    stroke: var(--rose);
+    stroke-width: 2;
+    stroke-linejoin: round;
+  }
+  .pdf-radar-point {
+    fill: var(--rose);
+    stroke: white;
+    stroke-width: 1.5;
+  }
+  .pdf-radar-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    fill: var(--navy);
+  }
+
+  /* ===== STAT LEVEL COLORÉ ===== */
+  .pdf-stat-level.green { color: #2E8B3F; }
+  .pdf-stat-level.orange { color: #D67837; }
+  .pdf-stat-level.amber { color: #C26A2F; }
+  .pdf-stat-level.red { color: #C2272E; }
+
+  /* ===== ATTENTION 2 COLONNES ===== */
+  .pdf-attention-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .pdf-attention-col-title {
+    font-size: 11px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    padding: 6px 10px;
+    border-radius: 6px;
+  }
+  .pdf-attention-col-title.pdf-out {
+    background: rgba(255, 77, 77, 0.12);
+    color: var(--rouge-fonce);
+  }
+  .pdf-attention-col-title.pdf-in {
+    background: rgba(126, 217, 87, 0.18);
+    color: #2E8B3F;
+  }
+  .pdf-attention-col .pdf-bar-row {
+    grid-template-columns: 110px 1fr 28px;
+    gap: 8px;
+    font-size: 11px;
+  }
+  .pdf-attention-col .pdf-bar-label { font-size: 11px; }
+  .pdf-attention-col .pdf-bar-value { font-size: 11px; }
+
+  /* ===== TRAJECTORY SVG ===== */
+  .pdf-trajectory-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .pdf-trajectory {
+    width: 100%;
+    max-width: 520px;
+    height: 200px;
+  }
+  .pdf-traj-line-red {
+    fill: none;
+    stroke: var(--rouge);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+  }
+  .pdf-traj-line-green {
+    fill: none;
+    stroke: var(--vert-fonce);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+  }
+  .pdf-traj-grid {
+    stroke: #E5E7EB;
+    stroke-width: 1;
+    stroke-dasharray: 3,3;
+  }
+  .pdf-traj-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    fill: var(--gris);
+  }
+  .pdf-traj-end-label {
+    font-size: 10px;
+    font-weight: 800;
+  }
+  .pdf-trajectory-legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 6px;
+    margin-bottom: 14px;
+  }
+  .pdf-traj-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .pdf-traj-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .pdf-traj-dot.red { background: var(--rouge); }
+  .pdf-traj-dot.green { background: var(--vert-fonce); }
 }
 </style>
 </head>
@@ -1354,6 +1489,7 @@ h2 {
 
   <!-- =================== PDF (caché à l'écran, visible à l'impression) =================== -->
   <section class="pdf-only" id="pdfPage" aria-hidden="true">
+    <!-- ===== PAGE 1 : VUE D'ENSEMBLE + ROUE DE VIE ===== -->
     <div class="pdf-page">
       <div class="pdf-header">
         <div class="pdf-logo">Longévité&nbsp;<span class="accent">Sport</span></div>
@@ -1364,7 +1500,6 @@ h2 {
       <p class="pdf-subtitle">Roue de vie · Cercle d'attention · Projection sur 15 ans</p>
 
       <div class="pdf-section">
-        <div class="pdf-section-title">Vue d'ensemble</div>
         <div class="pdf-stat-grid">
           <div class="pdf-stat">
             <div class="pdf-stat-label">Équilibre de vie</div>
@@ -1372,19 +1507,50 @@ h2 {
           </div>
           <div class="pdf-stat">
             <div class="pdf-stat-label">Situation actuelle</div>
-            <div class="pdf-stat-value" id="pdfLevel">—</div>
+            <div class="pdf-stat-value pdf-stat-level" id="pdfLevel">—</div>
           </div>
         </div>
       </div>
 
       <div class="pdf-section">
         <div class="pdf-section-title">Ta roue de vie</div>
+        <div class="pdf-radar-wrap">
+          <svg class="pdf-radar" id="pdfWheelRadar" viewBox="0 0 340 340" aria-label="Roue de vie"></svg>
+        </div>
         <div class="pdf-bars" id="pdfWheelBars"></div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE 2 : ATTENTION + PROJECTION + CTA ===== -->
+    <div class="pdf-page">
+      <div class="pdf-header">
+        <div class="pdf-logo">Longévité&nbsp;<span class="accent">Sport</span></div>
+        <div class="pdf-date" id="pdfDate2">—</div>
       </div>
 
       <div class="pdf-section">
         <div class="pdf-section-title">Où va ton attention</div>
-        <div class="pdf-bars" id="pdfAttentionBars"></div>
+        <div class="pdf-attention-grid">
+          <div class="pdf-attention-col">
+            <div class="pdf-attention-col-title pdf-out">↗ Énergie qui part vers l'extérieur</div>
+            <div class="pdf-bars" id="pdfAttentionOutBars"></div>
+          </div>
+          <div class="pdf-attention-col">
+            <div class="pdf-attention-col-title pdf-in">↙ Énergie que tu te consacres</div>
+            <div class="pdf-bars" id="pdfAttentionInBars"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdf-section">
+        <div class="pdf-section-title">Tes 2 trajectoires sur 15 ans</div>
+        <div class="pdf-trajectory-wrap">
+          <svg class="pdf-trajectory" id="pdfTrajectory" viewBox="0 0 600 220" aria-label="Trajectoire"></svg>
+        </div>
+        <div class="pdf-trajectory-legend">
+          <div class="pdf-traj-item"><span class="pdf-traj-dot red"></span> Si rien ne change</div>
+          <div class="pdf-traj-item"><span class="pdf-traj-dot green"></span> Si tu te reprends</div>
+        </div>
       </div>
 
       <div class="pdf-section">
@@ -1765,17 +1931,19 @@ function buildTrajectory() {
   });
 
   // Green lines (top) — personnalisées
+  // Plus de marge entre les lignes pour que les labels ne se chevauchent pas
   for (let i = 0; i < 5; i++) {
     const startY = cy - 6 - i * 4;
     let endY;
     if (isGreen) {
-      // Scenario "avec suivi" : monte d'autant plus haut qu'on partait bas
-      const climbAmount = 30 + (vulnerability * 25); // 30 à 55
-      endY = climbAmount + i * 6;
+      // Scenario "avec suivi" : monte d'autant plus haut qu'on partait bas (amplification)
+      // Base position 28-65 selon vulnerability, espacement 11px entre les lignes
+      const climbAmount = 28 + (vulnerability * 30); // 28 à 58
+      endY = climbAmount + i * 11;
     } else {
       // Scenario "rien ne change" : descend d'autant plus que la situation est vulnérable
-      const dropAmount = vulnerability * 35; // 0 à 35 pixels de chute
-      endY = cy - 14 + i * 3 + dropAmount;
+      const dropAmount = vulnerability * 40; // 0 à 40 pixels de chute
+      endY = cy - 14 + i * 4 + dropAmount;
     }
     // Curve
     const c1x = cx + 80;
@@ -1785,24 +1953,25 @@ function buildTrajectory() {
     html += '<path d="M ' + cx + ' ' + startY + ' C ' + c1x + ' ' + c1y + ', ' + c2x + ' ' + c2y + ', ' + endX + ' ' + endY + '" stroke="url(#greenLine)" stroke-width="' + (isGreen ? 2.2 : 1.2) + '" fill="none" opacity="' + (isGreen ? 0.9 : 0.35) + '" stroke-linecap="round"/>';
     // Endpoint dot
     html += '<circle cx="' + endX + '" cy="' + endY + '" r="' + (isGreen ? 4 : 2.5) + '" fill="#B0F081" opacity="' + (isGreen ? 1 : 0.45) + '"/>';
-    // Label at end
+    // Label at end - position légèrement décalée pour éviter superposition avec le point
     if (isGreen) {
-      html += '<text x="' + (endX - 8) + '" y="' + (endY + 3) + '" text-anchor="end" fill="#B0F081" font-size="9.5" font-weight="700">' + greenLabels[i] + '</text>';
+      html += '<text x="' + (endX - 10) + '" y="' + (endY + 3) + '" text-anchor="end" fill="#B0F081" font-size="9.5" font-weight="700">' + greenLabels[i] + '</text>';
     }
   }
 
-  // Red lines (bottom) — personnalisées
+  // Red lines (bottom) — personnalisées avec plus d'espacement entre les labels
   for (let i = 0; i < 5; i++) {
     const startY = cy + 6 + i * 4;
     let endY;
     if (isGreen) {
       // Scenario "avec suivi" : les rouges redescendent vers l'équilibre
-      const recoverAmount = vulnerability * 20; // plus on partait bas, plus on remonte
-      endY = cy + 14 - i * 3 + 20 + recoverAmount;
+      const recoverAmount = vulnerability * 25; // plus on partait bas, plus on remonte
+      endY = cy + 14 - i * 4 + 25 + recoverAmount;
     } else {
-      // Scenario "rien ne change" : les rouges explosent d'autant plus que la vulnérabilité est forte
-      const explodeAmount = 30 + (vulnerability * 30); // 30 à 60 pixels
-      endY = H - 50 - i * 6 + (10 - explodeAmount * 0.2);
+      // Scenario "rien ne change" : les rouges descendent dramatiquement (plus la vulnérabilité est forte, plus c'est marqué)
+      // Espacement 11px entre les lignes pour que les labels soient lisibles
+      const dropDepth = 32 + (vulnerability * 35); // 32 à 67
+      endY = (H - 30) - dropDepth + i * 11;
     }
     const c1x = cx + 80;
     const c1y = startY + (endY - startY) * 0.2;
@@ -1810,8 +1979,9 @@ function buildTrajectory() {
     const c2y = endY;
     html += '<path d="M ' + cx + ' ' + startY + ' C ' + c1x + ' ' + c1y + ', ' + c2x + ' ' + c2y + ', ' + endX + ' ' + endY + '" stroke="url(#redLine)" stroke-width="' + (isGreen ? 1.2 : 2.2) + '" fill="none" opacity="' + (isGreen ? 0.35 : 0.9) + '" stroke-linecap="round"/>';
     html += '<circle cx="' + endX + '" cy="' + endY + '" r="' + (isGreen ? 2.5 : 4) + '" fill="#FF8A8A" opacity="' + (isGreen ? 0.45 : 1) + '"/>';
+    // Label décalé pour éviter superposition
     if (!isGreen) {
-      html += '<text x="' + (endX - 8) + '" y="' + (endY + 3) + '" text-anchor="end" fill="#FF8A8A" font-size="9.5" font-weight="700">' + redLabels[i] + '</text>';
+      html += '<text x="' + (endX - 10) + '" y="' + (endY + 3) + '" text-anchor="end" fill="#FF8A8A" font-size="9.5" font-weight="700">' + redLabels[i] + '</text>';
     }
   }
 
@@ -1822,14 +1992,14 @@ function buildTrajectory() {
   // Center label
   html += '<text x="' + cx + '" y="' + (cy + 38) + '" text-anchor="middle" fill="white" font-size="9.5" font-weight="800" letter-spacing="0.14em">AUJOURD\'HUI</text>';
 
-  // Indicateur "ton score actuel" en haut à gauche
+  // Indicateur "ta situation actuelle" en haut à gauche (ton coach positif)
   let scoreLevel, scoreColor;
   if (vulnerability < 0.35) { scoreLevel = 'Très solide'; scoreColor = '#B0F081'; }
-  else if (vulnerability < 0.55) { scoreLevel = 'À surveiller'; scoreColor = '#FFD580'; }
-  else if (vulnerability < 0.75) { scoreLevel = 'Fragilisée'; scoreColor = '#FFB07A'; }
-  else { scoreLevel = 'En alerte'; scoreColor = '#FF8A8A'; }
+  else if (vulnerability < 0.55) { scoreLevel = 'Bonne base'; scoreColor = '#FFD580'; }
+  else if (vulnerability < 0.75) { scoreLevel = 'À renforcer'; scoreColor = '#FFB07A'; }
+  else { scoreLevel = 'À reprendre en main'; scoreColor = '#FF8A8A'; }
 
-  html += '<text x="' + cx + '" y="20" text-anchor="start" fill="rgba(255,255,255,0.5)" font-size="9" font-weight="700" letter-spacing="0.1em">TA SITUATION ACTUELLE</text>';
+  html += '<text x="' + cx + '" y="20" text-anchor="start" fill="rgba(255,255,255,0.5)" font-size="9" font-weight="700" letter-spacing="0.1em">TA SITUATION</text>';
   html += '<text x="' + cx + '" y="36" text-anchor="start" fill="' + scoreColor + '" font-size="14" font-weight="800">' + scoreLevel + '</text>';
 
   svg.innerHTML = html;
@@ -1920,9 +2090,25 @@ function escapeHtml(s) {
 
 /* ===== TÉLÉCHARGEMENT PDF ===== */
 function downloadPDF() {
-  // Récupère le prénom s'il a été saisi
+  // 1. Cherche d'abord le prénom déjà saisi dans le formulaire d'inscription
   const prenomInput = document.getElementById('prenom');
-  const prenom = (prenomInput && prenomInput.value || '').trim() || 'toi';
+  let prenom = (prenomInput && prenomInput.value || '').trim();
+
+  // 2. Si pas de prénom, on demande via pop-up
+  if (!prenom) {
+    const saisi = prompt(
+      "Pour personnaliser ton bilan, quel est ton prénom ?\n\n(Tu peux aussi cliquer sur Annuler pour télécharger sans personnalisation)"
+    );
+    // Si la personne a annulé → null, si elle a juste validé vide → ""
+    if (saisi !== null && saisi.trim()) {
+      prenom = saisi.trim();
+      // On sauvegarde aussi dans l'input pour les téléchargements suivants
+      if (prenomInput) prenomInput.value = prenom;
+    } else {
+      // L'utilisateur a annulé ou laissé vide → fallback gracieux
+      prenom = 'toi';
+    }
+  }
 
   // Date du bilan
   const today = new Date();
@@ -1930,6 +2116,8 @@ function downloadPDF() {
     year: 'numeric', month: 'long', day: 'numeric'
   });
   document.getElementById('pdfDate').textContent = dateStr;
+  const pdfDate2 = document.getElementById('pdfDate2');
+  if (pdfDate2) pdfDate2.textContent = dateStr;
   document.getElementById('pdfName').textContent = prenom;
 
   // Stats globales roue de vie
@@ -1942,14 +2130,19 @@ function downloadPDF() {
   const inAvg = ATTENTION_IN.reduce((s, a) => s + (state.attention[a.key] || 0), 0) / ATTENTION_IN.length;
   const vulnerability = ((10 - wheelAvg) * 0.4 + outAvg * 0.3 + (10 - inAvg) * 0.3) / 10;
 
-  let level;
-  if (vulnerability < 0.35) level = 'Très solide';
-  else if (vulnerability < 0.55) level = 'À surveiller';
-  else if (vulnerability < 0.75) level = 'Fragilisée';
-  else level = 'En alerte';
-  document.getElementById('pdfLevel').textContent = level;
+  let level, levelClass;
+  if (vulnerability < 0.35) { level = 'Très solide'; levelClass = 'green'; }
+  else if (vulnerability < 0.55) { level = 'Bonne base'; levelClass = 'orange'; }
+  else if (vulnerability < 0.75) { level = 'À renforcer'; levelClass = 'amber'; }
+  else { level = 'À reprendre en main'; levelClass = 'red'; }
+  const pdfLevelEl = document.getElementById('pdfLevel');
+  pdfLevelEl.textContent = level;
+  pdfLevelEl.className = 'pdf-stat-value pdf-stat-level ' + levelClass;
 
-  // Barres roue de vie
+  // ===== RADAR ROUE DE VIE =====
+  drawPdfRadar('pdfWheelRadar', WHEEL_AXES, state.wheel);
+
+  // ===== BARRES ROUE DE VIE =====
   const wheelBarsHtml = WHEEL_AXES.map(a => {
     const v = state.wheel[a.key] || 0;
     const cls = v >= 7 ? 'green' : v >= 4 ? 'orange' : 'red';
@@ -1961,40 +2154,239 @@ function downloadPDF() {
   }).join('');
   document.getElementById('pdfWheelBars').innerHTML = wheelBarsHtml;
 
-  // Barres attention (énergie ext + énergie int)
-  const attentionItems = [...ATTENTION_OUT, ...ATTENTION_IN];
-  const attentionBarsHtml = attentionItems.map(a => {
+  // ===== BARRES ATTENTION EXTÉRIEURE (couleurs inversées) =====
+  const outBarsHtml = ATTENTION_OUT.map(a => {
     const v = state.attention[a.key] || 0;
-    const isOutward = ATTENTION_OUT.some(x => x.key === a.key);
-    let cls;
-    if (isOutward) {
-      cls = v >= 7 ? 'red' : v >= 4 ? 'orange' : 'green';
-    } else {
-      cls = v >= 7 ? 'green' : v >= 4 ? 'orange' : 'red';
-    }
+    // Inversé : élevé = rouge, bas = vert
+    const cls = v >= 7 ? 'red' : v >= 4 ? 'orange' : 'green';
     return '<div class="pdf-bar-row">' +
       '<div class="pdf-bar-label">' + a.label + '</div>' +
       '<div class="pdf-bar-track"><div class="pdf-bar-fill ' + cls + '" style="width:' + (v * 10) + '%"></div></div>' +
-      '<div class="pdf-bar-value">' + v + '/10</div>' +
+      '<div class="pdf-bar-value">' + v + '</div>' +
     '</div>';
   }).join('');
-  document.getElementById('pdfAttentionBars').innerHTML = attentionBarsHtml;
+  document.getElementById('pdfAttentionOutBars').innerHTML = outBarsHtml;
 
-  // Message personnalisé
+  // ===== BARRES ATTENTION INTÉRIEURE (couleurs normales) =====
+  const inBarsHtml = ATTENTION_IN.map(a => {
+    const v = state.attention[a.key] || 0;
+    const cls = v >= 7 ? 'green' : v >= 4 ? 'orange' : 'red';
+    return '<div class="pdf-bar-row">' +
+      '<div class="pdf-bar-label">' + a.label + '</div>' +
+      '<div class="pdf-bar-track"><div class="pdf-bar-fill ' + cls + '" style="width:' + (v * 10) + '%"></div></div>' +
+      '<div class="pdf-bar-value">' + v + '</div>' +
+    '</div>';
+  }).join('');
+  document.getElementById('pdfAttentionInBars').innerHTML = inBarsHtml;
+
+  // ===== MINI-TRAJECTORY =====
+  drawPdfTrajectory('pdfTrajectory', vulnerability);
+
+  // ===== MESSAGE PERSONNALISÉ AVEC PRÉNOM ET AXES SPÉCIFIQUES =====
   const max = Math.max(...wheelVals);
   const min = Math.min(...wheelVals);
   const gap = max - min;
   const sorted = [...WHEEL_AXES].map(a => ({ ...a, v: state.wheel[a.key] })).sort((x, y) => y.v - x.v);
   const strong = sorted.filter(a => a.v >= 7);
   const weak = sorted.filter(a => a.v <= 4).reverse();
-  const insightHTML = buildWheelInsight(wheelAvg, strong, weak, gap);
-  // Strip HTML tags pour le PDF
-  document.getElementById('pdfMessage').innerHTML = insightHTML;
+
+  // Top axes attention extérieure (énergie qui fuit)
+  const attentionOutSorted = ATTENTION_OUT
+    .map(a => ({ ...a, v: state.attention[a.key] || 0 }))
+    .sort((x, y) => y.v - x.v);
+  const topOutDrains = attentionOutSorted.filter(a => a.v >= 7);
+
+  // Top axes attention intérieure (manque d'attention à soi)
+  const attentionInSorted = ATTENTION_IN
+    .map(a => ({ ...a, v: state.attention[a.key] || 0 }))
+    .sort((x, y) => x.v - y.v); // ascending pour trouver les manques
+  const neglected = attentionInSorted.filter(a => a.v <= 4);
+
+  const personalizedMsg = buildPersonalizedPdfMessage({
+    prenom: prenom,
+    wheelAvg: wheelAvg,
+    gap: gap,
+    strong: strong,
+    weak: weak,
+    topOutDrains: topOutDrains,
+    neglected: neglected,
+    vulnerability: vulnerability,
+    level: level
+  });
+  document.getElementById('pdfMessage').innerHTML = personalizedMsg;
 
   // Petite pause pour que le DOM soit prêt, puis impression
   setTimeout(() => {
     window.print();
-  }, 200);
+  }, 250);
+}
+
+/* ===== MESSAGE PERSONNALISÉ POUR PDF ===== */
+function buildPersonalizedPdfMessage(ctx) {
+  const { prenom, wheelAvg, gap, strong, weak, topOutDrains, neglected, vulnerability, level } = ctx;
+  const isAnon = prenom === 'toi';
+  const nameVoc = isAnon ? '' : prenom + ', ';
+  const youSubj = isAnon ? 'tu' : 'tu';
+
+  let parts = [];
+
+  // === Phrase 1 : situation globale avec score précis (ton coach, jamais jugeant) ===
+  if (wheelAvg >= 7.5) {
+    parts.push((isAnon ? 'Ton bilan' : nameVoc.charAt(0).toUpperCase() + nameVoc.slice(1) + 'ton bilan') + ' affiche un <strong>équilibre de ' + wheelAvg.toFixed(1) + '/10</strong> — c\'est remarquable.');
+  } else if (wheelAvg >= 5.5) {
+    parts.push((isAnon ? 'Ton bilan' : nameVoc.charAt(0).toUpperCase() + nameVoc.slice(1) + 'ton bilan') + ' affiche un <strong>équilibre de ' + wheelAvg.toFixed(1) + '/10</strong>. Tu as déjà <strong>une base solide</strong> — il y a juste de la marge pour aller chercher mieux.');
+  } else if (wheelAvg >= 3.5) {
+    parts.push((isAnon ? 'Ton bilan' : nameVoc.charAt(0).toUpperCase() + nameVoc.slice(1) + 'ton bilan') + ' affiche un <strong>équilibre de ' + wheelAvg.toFixed(1) + '/10</strong>. Tu donnes beaucoup à l\'extérieur — et la bonne nouvelle, c\'est que <strong>tout est là</strong> pour rééquilibrer.');
+  } else {
+    parts.push((isAnon ? 'Ton bilan' : nameVoc.charAt(0).toUpperCase() + nameVoc.slice(1) + 'ton bilan') + ' affiche un <strong>équilibre de ' + wheelAvg.toFixed(1) + '/10</strong>. Ça veut juste dire <strong>une chose</strong> : il y a énormément à gagner, et tu es au bon endroit pour commencer.');
+  }
+
+  // === Phrase 2 : ce qui fonctionne (force la plus haute) ===
+  if (strong.length > 0) {
+    const topStrong = strong[0];
+    if (strong.length >= 2) {
+      parts.push('Ce qui te porte aujourd\'hui : <strong>' + strong[0].label + '</strong> et <strong>' + strong[1].label + '</strong> — garde ces ancrages, ils sont précieux.');
+    } else {
+      parts.push('Ton ancrage le plus solide : <strong>' + topStrong.label + '</strong> (' + topStrong.v + '/10). C\'est ta base, ton point d\'appui.');
+    }
+  }
+
+  // === Phrase 3 : les drains d'énergie extérieure (le plus important) ===
+  if (topOutDrains.length > 0) {
+    const top = topOutDrains[0];
+    if (topOutDrains.length >= 2) {
+      parts.push('Ton énergie fuit surtout vers <strong>' + topOutDrains[0].label + '</strong> (' + topOutDrains[0].v + '/10) et <strong>' + topOutDrains[1].label + '</strong> (' + topOutDrains[1].v + '/10). C\'est là que se joue ta récupération.');
+    } else {
+      parts.push('Ton plus gros drain d\'énergie : <strong>' + top.label + '</strong> (' + top.v + '/10). Réduire ce poste, même un peu, peut tout changer.');
+    }
+  }
+
+  // === Phrase 4 : ce qui te manque pour toi ===
+  if (neglected.length > 0) {
+    const top = neglected[0];
+    if (neglected.length >= 2) {
+      parts.push('Ce qui manque le plus à <strong>toi-même</strong> : ' + neglected[0].label.toLowerCase() + ' et ' + neglected[1].label.toLowerCase() + '. <strong>10 minutes par jour</strong>, juste pour ça, peuvent tout débloquer.');
+    } else {
+      parts.push('Ce qui te manque le plus : <strong>' + top.label.toLowerCase() + '</strong>. Tu sais quoi faire — il te manque juste la régularité.');
+    }
+  } else if (neglected.length === 0 && wheelAvg >= 6) {
+    parts.push((isAnon ? 'Tu te' : prenom + ', tu te') + ' consacres déjà du temps à <strong>toi</strong>. C\'est rare et précieux. La question devient : comment soutenir cet équilibre dans les périodes plus chargées&nbsp;?');
+  }
+
+  // === Phrase 5 : pivot émotionnel selon vulnérabilité (ton coach positif) ===
+  if (vulnerability < 0.35) {
+    parts.push('Ta trajectoire est <strong>très solide</strong>. La vraie mission maintenant : <strong>protéger</strong> cet équilibre dans la durée.');
+  } else if (vulnerability < 0.55) {
+    parts.push('Tu as une <strong>bonne base</strong>. Avec un peu de constance et les bons leviers, tu peux passer à la <strong>vitesse supérieure</strong>.');
+  } else if (vulnerability < 0.75) {
+    parts.push('Tu as déjà beaucoup en toi. Il te reste à <strong>renforcer ce qui te manque</strong> — et ça peut aller plus vite que tu ne le crois.');
+  } else {
+    parts.push('Tu es à un <strong>moment-clé</strong> de ta vie. C\'est le moment idéal pour <strong>reprendre la main</strong> et installer ce qui te porte vraiment.');
+  }
+
+  // Renvoie en HTML formaté avec espacement
+  return parts.map(p => '<p style="margin: 0 0 8px;">' + p + '</p>').join('');
+}
+function drawPdfRadar(svgId, axes, values) {
+  const svg = document.getElementById(svgId);
+  if (!svg) return;
+  const W = 340, H = 340;
+  const cx = W/2, cy = H/2;
+  const R = 110;
+  const N = axes.length;
+
+  let html = '';
+  // Cercles concentriques
+  for (let r = 1; r <= 5; r++) {
+    html += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (R * r / 5) + '" class="pdf-radar-grid"/>';
+  }
+  // Rayons
+  for (let i = 0; i < N; i++) {
+    const a = (Math.PI * 2 * i / N) - Math.PI/2;
+    const x = cx + Math.cos(a) * R;
+    const y = cy + Math.sin(a) * R;
+    html += '<line x1="' + cx + '" y1="' + cy + '" x2="' + x + '" y2="' + y + '" class="pdf-radar-grid"/>';
+  }
+  // Polygone rempli
+  const pts = axes.map((ax, i) => {
+    const v = values[ax.key] || 0;
+    const a = (Math.PI * 2 * i / N) - Math.PI/2;
+    const r = (R * v / 10);
+    const x = cx + Math.cos(a) * r;
+    const y = cy + Math.sin(a) * r;
+    return x + ',' + y;
+  }).join(' ');
+  html += '<polygon points="' + pts + '" class="pdf-radar-fill"/>';
+  // Points
+  axes.forEach((ax, i) => {
+    const v = values[ax.key] || 0;
+    if (v === 0) return;
+    const a = (Math.PI * 2 * i / N) - Math.PI/2;
+    const r = (R * v / 10);
+    const x = cx + Math.cos(a) * r;
+    const y = cy + Math.sin(a) * r;
+    html += '<circle cx="' + x + '" cy="' + y + '" r="3.5" class="pdf-radar-point"/>';
+  });
+  // Labels
+  axes.forEach((ax, i) => {
+    const a = (Math.PI * 2 * i / N) - Math.PI/2;
+    const lr = R + 20;
+    let x = cx + Math.cos(a) * lr;
+    let y = cy + Math.sin(a) * lr;
+    let anchor = 'middle';
+    if (Math.cos(a) > 0.3) anchor = 'start';
+    else if (Math.cos(a) < -0.3) anchor = 'end';
+    const label = ax.label.length > 14 ? ax.label.split(' ')[0] : ax.label;
+    html += '<text x="' + x + '" y="' + (y+3) + '" text-anchor="' + anchor + '" class="pdf-radar-label">' + label + '</text>';
+  });
+  svg.innerHTML = html;
+}
+
+/* ===== DESSIN MINI-TRAJECTOIRE POUR PDF ===== */
+function drawPdfTrajectory(svgId, vulnerability) {
+  const svg = document.getElementById(svgId);
+  if (!svg) return;
+  const W = 600, H = 220;
+  const startX = 40, endX = W - 40;
+  const cy = H / 2;
+  const labels = ['Aujourd\'hui', '5 ans', '10 ans', '15 ans'];
+  const xMarks = [startX, startX + (endX - startX) * 0.33, startX + (endX - startX) * 0.66, endX];
+
+  let html = '';
+
+  // Grille verticale + labels temps
+  xMarks.forEach((x, i) => {
+    html += '<line x1="' + x + '" y1="20" x2="' + x + '" y2="' + (H-30) + '" class="pdf-traj-grid"/>';
+    html += '<text x="' + x + '" y="' + (H-12) + '" text-anchor="middle" class="pdf-traj-label">' + labels[i].toUpperCase() + '</text>';
+  });
+
+  // Point de départ commun
+  const startY = cy;
+
+  // ===== Courbe VERTE (si tu te reprends) — MONTE vers le haut (bon)
+  // Plus la situation actuelle est mauvaise (vulnerability élevée), plus la marge de progression est forte
+  // donc plus le vert monte haut (effet "rebond")
+  const greenEndY = 40 - (vulnerability * 25); // entre 40 (peu de marge) et 15 (rebond fort)
+  const greenC1x = startX + 120, greenC1y = cy - 10;
+  const greenC2x = endX - 120, greenC2y = greenEndY;
+  html += '<path d="M ' + startX + ' ' + startY + ' C ' + greenC1x + ' ' + greenC1y + ', ' + greenC2x + ' ' + greenC2y + ', ' + endX + ' ' + greenEndY + '" class="pdf-traj-line-green"/>';
+  html += '<circle cx="' + endX + '" cy="' + greenEndY + '" r="5" fill="#4EA82A"/>';
+  html += '<text x="' + (endX - 8) + '" y="' + (greenEndY - 10) + '" text-anchor="end" class="pdf-traj-end-label" fill="#2E8B3F">Énergie, sérénité, équilibre</text>';
+
+  // ===== Courbe ROUGE (si rien ne change) — DESCEND vers le bas (mauvais)
+  // Plus la situation actuelle est mauvaise, plus la chute est dramatique
+  const redEndY = (H - 50) + (vulnerability * 25); // entre H-50 (chute légère) et H-25 (effondrement)
+  const redC1x = startX + 120, redC1y = cy + 10;
+  const redC2x = endX - 120, redC2y = redEndY;
+  html += '<path d="M ' + startX + ' ' + startY + ' C ' + redC1x + ' ' + redC1y + ', ' + redC2x + ' ' + redC2y + ', ' + endX + ' ' + redEndY + '" class="pdf-traj-line-red"/>';
+  html += '<circle cx="' + endX + '" cy="' + redEndY + '" r="5" fill="#FF4D4D"/>';
+  html += '<text x="' + (endX - 8) + '" y="' + (redEndY + 16) + '" text-anchor="end" class="pdf-traj-end-label" fill="#C2272E">Stress, fatigue, anxiété</text>';
+
+  // Point central (aujourd'hui)
+  html += '<circle cx="' + startX + '" cy="' + startY + '" r="6" fill="#111827"/>';
+  html += '<text x="' + (startX + 12) + '" y="' + (startY + 4) + '" text-anchor="start" class="pdf-traj-end-label" fill="#111827">Toi</text>';
+
+  svg.innerHTML = html;
 }
 
 /* ===== PARTAGE AVEC UNE AMIE ===== */
