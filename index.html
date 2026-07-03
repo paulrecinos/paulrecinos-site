@@ -250,6 +250,187 @@ footer p{color:rgba(255,255,255,.5);font-size:13px;margin-bottom:6px;}
   .nav-links{display:none;}
 }
 </style>
+
+<!-- ===== LONGÉVITÉ : bloc Netflix du mouvement (styles) ===== -->
+<style>
+/* ===== NETFLIX DU MOUVEMENT — styles isolés (préfixe lsflix) ===== */
+.lsflix{
+  --rose:#E91E8C; --pink:#FF4DA6; --orange:#F5855A; --lav:#EDE7F6;
+  --ink:#2a2230; --muted:#8b8597;
+  font-family:'Montserrat',sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(233,30,140,.06), transparent 60%),
+    #fff;
+  padding:70px 0 40px;
+}
+.lsflix *{box-sizing:border-box;}
+.lsflix .lsflix-wrap{max-width:1180px;margin:0 auto;padding:0 22px;}
+
+/* En-tête de section : petit label + grand titre Bebas + filet */
+.lsflix .lsflix-head{margin:0 0 22px;}
+.lsflix .lsflix-eyebrow{
+  display:inline-block;font-weight:800;font-size:12px;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--pink);margin:0 0 6px;
+}
+.lsflix .lsflix-h2{
+  font-family:'Bebas Neue',sans-serif;line-height:.92;margin:0;
+  font-size:clamp(38px,5.5vw,64px);letter-spacing:1.5px;color:var(--ink);
+}
+.lsflix .lsflix-h2 b{
+  background:linear-gradient(90deg,var(--rose),var(--orange));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:inherit;
+}
+.lsflix .lsflix-rule{height:4px;width:64px;border-radius:50px;margin-top:10px;
+  background:linear-gradient(90deg,var(--rose),var(--orange));}
+
+/* Recherche */
+.lsflix .lsflix-search{
+  display:flex;align-items:center;gap:12px;background:#fff;
+  border:2px solid var(--lav);border-radius:50px;padding:13px 22px;
+  max-width:440px;margin:0 auto 54px;
+  box-shadow:0 8px 24px rgba(233,30,140,.08);transition:border-color .2s,box-shadow .2s;
+}
+.lsflix .lsflix-search:focus-within{border-color:var(--pink);box-shadow:0 8px 28px rgba(233,30,140,.18);}
+.lsflix .lsflix-search input{border:none;background:none;outline:none;width:100%;
+  font-family:'Montserrat',sans-serif;font-size:15px;font-weight:600;color:var(--ink);}
+.lsflix .lsflix-search input::placeholder{color:var(--muted);font-weight:600;}
+
+/* "À la une" : grande carte cinéma */
+.lsflix .lsflix-feature{
+  position:relative;border-radius:24px;overflow:hidden;cursor:pointer;
+  aspect-ratio:16/9;background:#15101a;
+  box-shadow:0 26px 60px rgba(233,30,140,.28), 0 4px 14px rgba(0,0,0,.12);
+}
+.lsflix .lsflix-feature img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease;}
+.lsflix .lsflix-feature:hover img{transform:scale(1.05);}
+.lsflix .lsflix-feature-grad{
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:34px;
+  background:linear-gradient(0deg,rgba(20,8,18,.85) 0%,rgba(20,8,18,.2) 42%,transparent 68%);
+}
+.lsflix .lsflix-tag{
+  align-self:flex-start;display:inline-flex;align-items:center;gap:7px;
+  background:linear-gradient(90deg,var(--rose),var(--orange));color:#fff;
+  font-weight:900;letter-spacing:1.5px;font-size:12px;text-transform:uppercase;
+  padding:7px 16px;border-radius:50px;margin-bottom:14px;box-shadow:0 6px 18px rgba(233,30,140,.4);
+}
+.lsflix .lsflix-feature-title{color:#fff;font-weight:900;max-width:80%;
+  font-size:clamp(19px,2.7vw,30px);line-height:1.15;text-shadow:0 2px 14px rgba(0,0,0,.55);}
+.lsflix .lsflix-feature-date{color:rgba(255,255,255,.78);font-weight:700;font-size:13px;margin-top:8px;}
+.lsflix .lsflix-bigplay{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:86px;height:86px;border-radius:50%;background:rgba(255,255,255,.94);
+  display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.4);
+  transition:transform .25s,background .25s;
+}
+.lsflix .lsflix-feature:hover .lsflix-bigplay{transform:translate(-50%,-50%) scale(1.09);}
+.lsflix .lsflix-bigplay::after{content:"";border-style:solid;border-width:16px 0 16px 27px;
+  border-color:transparent transparent transparent var(--rose);margin-left:7px;}
+
+/* Rangée horizontale + fondu de bord pour signaler le scroll */
+.lsflix .lsflix-row{margin-bottom:56px;}
+.lsflix .lsflix-rail{position:relative;}
+.lsflix .lsflix-rail::after{content:"";position:absolute;top:0;right:0;width:54px;height:calc(100% - 16px);
+  pointer-events:none;background:linear-gradient(90deg,transparent,#fff);}
+.lsflix .lsflix-track{
+  display:flex;gap:18px;overflow-x:auto;padding:8px 2px 16px;
+  scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--pink) var(--lav);
+}
+.lsflix .lsflix-track::-webkit-scrollbar{height:8px;}
+.lsflix .lsflix-track::-webkit-scrollbar-track{background:var(--lav);border-radius:50px;}
+.lsflix .lsflix-track::-webkit-scrollbar-thumb{background:var(--pink);border-radius:50px;}
+
+/* Carte vidéo */
+.lsflix .lsflix-card{
+  flex:0 0 268px;scroll-snap-align:start;border:none;background:none;padding:0;
+  text-align:left;cursor:pointer;font-family:'Montserrat',sans-serif;
+}
+.lsflix .lsflix-thumb{
+  position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16/9;
+  background:linear-gradient(135deg,#241a2c,#3a2336);
+  box-shadow:0 10px 26px rgba(233,30,140,.14);transition:transform .28s,box-shadow .28s;
+}
+.lsflix .lsflix-card:hover .lsflix-thumb{transform:translateY(-5px);box-shadow:0 18px 38px rgba(233,30,140,.32);}
+.lsflix .lsflix-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.lsflix .lsflix-thumb .lsflix-play{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.94);
+  display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;
+  box-shadow:0 6px 18px rgba(0,0,0,.3);
+}
+.lsflix .lsflix-card:hover .lsflix-play{opacity:1;}
+.lsflix .lsflix-play::after{content:"";border-style:solid;border-width:10px 0 10px 16px;
+  border-color:transparent transparent transparent var(--rose);margin-left:4px;}
+.lsflix .lsflix-card-title{font-weight:800;font-size:14.5px;line-height:1.32;margin-top:11px;color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.lsflix .lsflix-card-date{color:var(--muted);font-size:12px;font-weight:700;margin-top:4px;}
+
+/* Sous-titre de catégorie */
+.lsflix .lsflix-catname{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1.5px;
+  color:var(--rose);margin:0 0 12px;}
+
+/* Effet de chargement (shimmer) */
+.lsflix .sk{background:linear-gradient(100deg,var(--lav) 28%,#f7f1fc 48%,var(--lav) 68%);
+  background-size:220% 100%;animation:lsflix-sh 1.3s linear infinite;}
+@keyframes lsflix-sh{0%{background-position:220% 0}100%{background-position:-220% 0}}
+.lsflix .sk-thumb{border-radius:18px;aspect-ratio:16/9;}
+.lsflix .sk-line{height:11px;border-radius:50px;margin-top:11px;}
+.lsflix .sk-feature{border-radius:24px;aspect-ratio:16/9;}
+
+/* État de repli élégant (si vidéos non joignables) */
+.lsflix .lsflix-empty{
+  border-radius:24px;background:linear-gradient(135deg,var(--lav),#fbeff7);
+  border:2px solid #f6d6e8;padding:48px 28px;text-align:center;
+}
+.lsflix .lsflix-empty .ico{font-size:40px;line-height:1;margin-bottom:10px;}
+.lsflix .lsflix-empty h4{margin:0 0 6px;font-weight:900;color:var(--ink);font-size:18px;}
+.lsflix .lsflix-empty p{margin:0 0 18px;color:var(--muted);font-weight:600;font-size:14px;}
+.lsflix .lsflix-btn{
+  display:inline-block;text-decoration:none;color:#fff;font-weight:900;letter-spacing:1px;
+  padding:14px 30px;border-radius:50px;background:linear-gradient(90deg,var(--rose),var(--orange));
+  box-shadow:0 10px 26px rgba(233,30,140,.34);transition:transform .2s;
+}
+.lsflix .lsflix-btn:hover{transform:translateY(-2px);}
+
+/* Conseil de la semaine */
+.lsflix .lsflix-tip{
+  background:linear-gradient(120deg,var(--rose) 0%,#f0508a 45%,var(--orange) 100%);
+  border-radius:24px;padding:38px;color:#fff;margin-bottom:56px;
+  box-shadow:0 20px 44px rgba(233,30,140,.3);
+}
+.lsflix .lsflix-tip .lab{font-family:'Bebas Neue',sans-serif;letter-spacing:2px;font-size:24px;opacity:.95;margin:0 0 8px;}
+.lsflix .lsflix-tip p{font-size:18px;line-height:1.55;font-weight:700;margin:0;}
+
+/* Instagram */
+.lsflix .lsflix-ig{
+  border-radius:24px;padding:3px;
+  background:linear-gradient(135deg,#feda75,#fa7e1e,#d62976,#962fbf);
+}
+.lsflix .lsflix-ig-inner{background:#fff;border-radius:21px;padding:40px 28px;text-align:center;}
+.lsflix .lsflix-ig-inner .ico{font-size:38px;margin-bottom:8px;}
+.lsflix .lsflix-ig-inner h4{margin:0 0 4px;font-weight:900;font-size:18px;color:var(--ink);}
+.lsflix .lsflix-ig-inner p{margin:0 0 18px;color:var(--muted);font-weight:600;font-size:14px;}
+
+/* Modale lecteur (autoplay au clic) */
+.lsflix-modal{position:fixed;inset:0;z-index:99999;display:none;
+  background:rgba(12,5,16,.9);align-items:center;justify-content:center;padding:20px;}
+.lsflix-modal.open{display:flex;}
+.lsflix-modal-inner{position:relative;width:min(980px,100%);}
+.lsflix-modal-video{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000;
+  box-shadow:0 24px 70px rgba(0,0,0,.6);}
+.lsflix-modal-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.lsflix-modal-close{position:absolute;top:-54px;right:0;width:44px;height:44px;border-radius:50%;
+  border:none;cursor:pointer;background:#fff;color:#E91E8C;font-size:21px;font-weight:900;
+  box-shadow:0 4px 14px rgba(0,0,0,.3);}
+
+@media(max-width:620px){
+  .lsflix{padding:48px 0 30px;}
+  .lsflix .lsflix-card{flex-basis:80vw;}
+  .lsflix .lsflix-tip,.lsflix .lsflix-ig-inner{padding:26px;}
+  .lsflix .lsflix-rail::after{display:none;}
+}
+@media(prefers-reduced-motion:reduce){.lsflix *{transition:none!important;animation:none!important;}}
+</style>
 </head>
 <body>
 
@@ -615,6 +796,105 @@ footer p{color:rgba(255,255,255,.5);font-size:13px;margin-bottom:6px;}
         <a href="https://apps.apple.com/fr/app/longevit%C3%A9-sport/id6761455014" target="_blank" class="hero-cta">TÉLÉCHARGER L APP</a>
       </div>
     </section>
+
+    <!--   À COLLER après le Hero LONGÉVITÉ, avant "Qui suis-je ?"  -->
+<section class="lsflix" id="lsflix">
+  <div class="lsflix-wrap">
+
+    <!-- Recherche -->
+    <div class="lsflix-search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2.6" stroke-linecap="round">
+        <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="lsflix-search-input" placeholder="Rechercher une séance…" autocomplete="off">
+    </div>
+
+    <!-- À LA UNE -->
+    <div class="lsflix-row">
+      <div class="lsflix-head">
+        <span class="lsflix-eyebrow">À la une</span>
+        <h2 class="lsflix-h2">La dernière <b>séance</b></h2>
+        <div class="lsflix-rule"></div>
+      </div>
+      <div id="lsflix-feature"></div>
+    </div>
+
+    <!-- DERNIÈRES VIDÉOS -->
+    <div class="lsflix-row">
+      <div class="lsflix-head">
+        <span class="lsflix-eyebrow">Nouveautés</span>
+        <h2 class="lsflix-h2">Dernières <b>vidéos</b></h2>
+        <div class="lsflix-rule"></div>
+      </div>
+      <div class="lsflix-rail"><div class="lsflix-track" id="lsflix-recent"></div></div>
+    </div>
+
+    <!-- CONSEIL DE LA SEMAINE
+         ================================================================
+         👉 MODIFIER ICI CHAQUE SEMAINE (la SEULE chose à toucher).
+            Remplace le texte entre les balises <p> ci-dessous. C'est tout.
+         ================================================================ -->
+    <div class="lsflix-tip">
+      <p class="lab">💡 LE CONSEIL DE LA SEMAINE</p>
+      <p>Bouge 10 minutes dès le réveil, même en pyjama. Ton corps ne ment pas :
+         c'est la régularité, pas l'intensité, qui change tout sur la durée.</p>
+    </div>
+    <!-- FIN CONSEIL -->
+
+    <!-- CATÉGORIES (remplies automatiquement par mots-clés) -->
+    <div class="lsflix-row" id="lsflix-cat-row" style="display:none;">
+      <div class="lsflix-head">
+        <span class="lsflix-eyebrow">Par thème</span>
+        <h2 class="lsflix-h2"><b>Catégories</b></h2>
+        <div class="lsflix-rule"></div>
+      </div>
+      <div id="lsflix-categories"></div>
+    </div>
+
+    <!-- SHORTS (apparaît tout seul quand tu publieras des Shorts) -->
+    <div class="lsflix-row" id="lsflix-shorts-row" style="display:none;">
+      <div class="lsflix-head">
+        <span class="lsflix-eyebrow">Formats courts</span>
+        <h2 class="lsflix-h2"><b>Shorts</b></h2>
+        <div class="lsflix-rule"></div>
+      </div>
+      <div class="lsflix-rail"><div class="lsflix-track" id="lsflix-shorts"></div></div>
+    </div>
+
+    <!-- INSTAGRAM
+         ================================================================
+         👉 POUR CONNECTER TON INSTAGRAM (gratuit, ~5 min) :
+            1. https://snapwidget.com → crée un compte gratuit
+            2. "Create a new widget" → connecte @paul.recinos.coach → style "Grid"
+            3. Copie le code <iframe ...> que SnapWidget te donne
+            4. Remplace tout le <div class="lsflix-ig-inner"> ci-dessous par cet iframe
+         ================================================================ -->
+    <div class="lsflix-row">
+      <div class="lsflix-head">
+        <span class="lsflix-eyebrow">Coulisses</span>
+        <h2 class="lsflix-h2">Sur <b>Instagram</b></h2>
+        <div class="lsflix-rule"></div>
+      </div>
+      <div class="lsflix-ig">
+        <div class="lsflix-ig-inner">
+          <div class="ico">📸</div>
+          <h4>@paul.recinos.coach</h4>
+          <p>Mes coulisses, mes conseils du jour et mes lives.</p>
+          <a class="lsflix-btn" href="https://www.instagram.com/paul.recinos.coach/" target="_blank" rel="noopener">Me suivre sur Instagram</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Modale lecteur (réutilisée par toutes les vidéos) -->
+<div class="lsflix-modal" id="lsflix-modal">
+  <div class="lsflix-modal-inner">
+    <button class="lsflix-modal-close" id="lsflix-modal-close" aria-label="Fermer">✕</button>
+    <div class="lsflix-modal-video" id="lsflix-modal-video"></div>
+  </div>
+</div>
 
     <section class="coach-about">
       <div class="coach-about-img">
@@ -1057,4 +1337,198 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 
 });
+</script>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =====================================================================
+     RÉGLAGES
+     ===================================================================== */
+  var CHANNEL_ID  = "UCGRbx18kh0xKg45bDREwDSQ";              // ta chaîne (confirmé)
+  var CHANNEL_URL = "https://www.youtube.com/@paul.recinos";
+
+  /* ---- CATÉGORIES : se remplissent TOUTES SEULES selon les MOTS-CLÉS
+     présents dans les TITRES de tes vidéos. Aucune playlist à créer.
+     Pour ajuster : ajoute/retire des mots dans "mots". Une catégorie sans
+     vidéo correspondante ne s'affiche pas. ---- */
+  var CATEGORIES = [
+    { nom:"Cardio",        mots:["cardio","reggaeton","hiit","brûle","brule","saut","jump"] },
+    { nom:"Renforcement",  mots:["abdos","cuisses","fessier","fessiers","renfo","gainage","bras","jambes","muscu"] },
+    { nom:"Mobilité",      mots:["mobilité","mobilite","coordination","souplesse","étire","etire","stretch","fonctionnel"] },
+    { nom:"Danse",         mots:["hip hop","hip-hop","danse","kizomba","afro","reggaeton","groove","flow"] }
+  ];
+
+  /* ---- SHORTS : détectés via "short" / "#shorts" dans le titre.
+     La rangée reste cachée tant qu'aucun Short n'est trouvé. ---- */
+  var MOTS_SHORTS = ["#shorts","short"];
+
+  /* =====================================================================
+     OUTILS
+     ===================================================================== */
+  function thumb(id){ return "https://i.ytimg.com/vi/"+id+"/hqdefault.jpg"; }
+  function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+  function frDate(iso){ try{ return new Date(iso).toLocaleDateString("fr-FR",
+    {day:"numeric",month:"long",year:"numeric"}); }catch(e){ return ""; } }
+  function titreContient(titre,mots){
+    var t=(titre||"").toLowerCase();
+    for(var i=0;i<mots.length;i++){ if(t.indexOf(mots[i])!==-1) return true; }
+    return false;
+  }
+
+  /* ---- Normalisation depuis rss2json (JSON) ---- */
+  function fromRss2json(items){
+    return items.map(function(it){
+      var id="";
+      if(it.guid && it.guid.indexOf("yt:video:")===0) id=it.guid.replace("yt:video:","");
+      else { try{ id=new URL(it.link).searchParams.get("v")||""; }catch(e){} }
+      return { id:id, title:it.title||"", date:it.pubDate||"" };
+    }).filter(function(x){ return x.id; });
+  }
+  /* ---- Normalisation depuis le XML brut (proxys de secours) ---- */
+  function fromXml(xmlText){
+    var doc=new DOMParser().parseFromString(xmlText,"text/xml");
+    var entries=doc.getElementsByTagName("entry"), out=[];
+    for(var i=0;i<entries.length;i++){
+      var e=entries[i];
+      var idEl=e.getElementsByTagName("yt:videoId")[0]||e.getElementsByTagName("videoId")[0];
+      var tEl=e.getElementsByTagName("title")[0];
+      var pEl=e.getElementsByTagName("published")[0];
+      var id=idEl?(idEl.textContent||"").trim():"";
+      if(id) out.push({ id:id, title:tEl?tEl.textContent:"", date:pEl?pEl.textContent:"" });
+    }
+    return out;
+  }
+
+  /* ---- Récupération robuste : on essaie plusieurs passerelles dans l'ordre.
+     Si l'une échoue (panne / quota), on passe à la suivante. ---- */
+  function chargerVideos(){
+    var feed="https://www.youtube.com/feeds/videos.xml?channel_id="+CHANNEL_ID;
+    var enc=encodeURIComponent(feed);
+    var essais=[
+      function(){ return fetch("https://api.rss2json.com/v1/api.json?rss_url="+enc)
+        .then(function(r){return r.json();})
+        .then(function(d){ if(d&&d.status==="ok"&&d.items&&d.items.length) return fromRss2json(d.items); throw new Error("vide"); }); },
+      function(){ return fetch("https://api.allorigins.win/raw?url="+enc)
+        .then(function(r){return r.text();})
+        .then(function(t){ var x=fromXml(t); if(x.length) return x; throw new Error("vide"); }); },
+      function(){ return fetch("https://corsproxy.io/?url="+enc)
+        .then(function(r){return r.text();})
+        .then(function(t){ var x=fromXml(t); if(x.length) return x; throw new Error("vide"); }); }
+    ];
+    return essais.reduce(function(p,fn){ return p.catch(fn); }, Promise.reject(new Error("start")));
+  }
+
+  /* =====================================================================
+     RENDU
+     ===================================================================== */
+  function cardHTML(v){
+    return '<button class="lsflix-card" data-id="'+v.id+'" data-title="'+esc((v.title||"").toLowerCase())+'">'
+      + '<div class="lsflix-thumb"><img loading="lazy" src="'+thumb(v.id)+'" alt="" '
+      +   'onerror="this.style.display=\'none\'"><span class="lsflix-play"></span></div>'
+      + '<div class="lsflix-card-title">'+esc(v.title)+'</div>'
+      + '<div class="lsflix-card-date">'+frDate(v.date)+'</div></button>';
+  }
+  function featureHTML(v){
+    return '<div class="lsflix-feature" data-id="'+v.id+'">'
+      + '<img src="'+thumb(v.id)+'" alt="" onerror="this.style.display=\'none\'">'
+      + '<div class="lsflix-bigplay"></div>'
+      + '<div class="lsflix-feature-grad">'
+      +   '<span class="lsflix-tag">▶ Nouveau</span>'
+      +   '<div class="lsflix-feature-title">'+esc(v.title)+'</div>'
+      +   '<div class="lsflix-feature-date">'+frDate(v.date)+'</div>'
+      + '</div></div>';
+  }
+  function skeletonCards(n){
+    var s=""; for(var i=0;i<n;i++){ s+='<div class="lsflix-card">'
+      +'<div class="sk sk-thumb"></div><div class="sk sk-line" style="width:90%"></div>'
+      +'<div class="sk sk-line" style="width:55%"></div></div>'; }
+    return s;
+  }
+  function emptyCard(){
+    return '<div class="lsflix-empty"><div class="ico">🎬</div>'
+      + '<h4>Tes vidéos s\'afficheront ici</h4>'
+      + '<p>Le temps de récupérer ta chaîne YouTube. En attendant&nbsp;:</p>'
+      + '<a class="lsflix-btn" href="'+CHANNEL_URL+'" target="_blank" rel="noopener">Voir ma chaîne YouTube</a></div>';
+  }
+
+  function afficher(items){
+    // À la une = la plus récente
+    document.getElementById("lsflix-feature").innerHTML = featureHTML(items[0]);
+
+    // Dernières vidéos = les suivantes (ou toutes si une seule)
+    var reste = items.slice(1);
+    if(reste.length===0) reste = items;
+    document.getElementById("lsflix-recent").innerHTML = reste.map(cardHTML).join("");
+
+    // Catégories (par mots-clés)
+    var catHTML="", nbCat=0;
+    CATEGORIES.forEach(function(cat){
+      var matches=items.filter(function(v){ return titreContient(v.title,cat.mots); });
+      if(matches.length===0) return;
+      nbCat++;
+      catHTML+='<div style="margin-bottom:30px;"><p class="lsflix-catname">'+esc(cat.nom)+'</p>'
+        +'<div class="lsflix-rail"><div class="lsflix-track">'+matches.map(cardHTML).join("")+'</div></div></div>';
+    });
+    if(nbCat>0){
+      document.getElementById("lsflix-categories").innerHTML=catHTML;
+      document.getElementById("lsflix-cat-row").style.display="";
+    }
+
+    // Shorts
+    var shorts=items.filter(function(v){ return titreContient(v.title,MOTS_SHORTS); });
+    if(shorts.length>0){
+      document.getElementById("lsflix-shorts").innerHTML=shorts.map(cardHTML).join("");
+      document.getElementById("lsflix-shorts-row").style.display="";
+    }
+  }
+
+  function afficherRepli(){
+    document.getElementById("lsflix-feature").innerHTML = emptyCard();
+    document.getElementById("lsflix-recent").innerHTML  = ""; // rien plutôt que doublon
+  }
+
+  /* =====================================================================
+     LECTEUR (modale, autoplay au clic) — délégation d'événements
+     ===================================================================== */
+  var modal=document.getElementById("lsflix-modal");
+  var modalVideo=document.getElementById("lsflix-modal-video");
+  function play(id){
+    if(!id) return;
+    modalVideo.innerHTML='<iframe src="https://www.youtube.com/embed/'+id
+      +'?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+    modal.classList.add("open"); document.body.style.overflow="hidden";
+  }
+  function closeModal(){ modal.classList.remove("open"); modalVideo.innerHTML=""; document.body.style.overflow=""; }
+  document.getElementById("lsflix").addEventListener("click",function(e){
+    var el=e.target.closest("[data-id]"); if(el) play(el.getAttribute("data-id"));
+  });
+  document.getElementById("lsflix-modal-close").addEventListener("click",closeModal);
+  modal.addEventListener("click",function(e){ if(e.target===modal) closeModal(); });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape") closeModal(); });
+
+  /* =====================================================================
+     RECHERCHE (filtre les titres déjà chargés, sans API)
+     ===================================================================== */
+  document.getElementById("lsflix-search-input").addEventListener("input",function(e){
+    var q=e.target.value.trim().toLowerCase();
+    document.querySelectorAll("#lsflix .lsflix-card").forEach(function(c){
+      var t=c.getAttribute("data-title")||"";
+      c.style.display=(q===""||t.indexOf(q)!==-1)?"":"none";
+    });
+  });
+
+  /* =====================================================================
+     GO — squelette d'abord, puis vraies vidéos
+     ===================================================================== */
+  document.getElementById("lsflix-feature").innerHTML='<div class="sk sk-feature"></div>';
+  document.getElementById("lsflix-recent").innerHTML=skeletonCards(5);
+
+  chargerVideos()
+    .then(function(items){ if(items&&items.length) afficher(items); else afficherRepli(); })
+    .catch(function(){ afficherRepli(); });
+
+})();
 </script>
