@@ -831,13 +831,14 @@ footer p{color:rgba(255,255,255,.5);font-size:13px;margin-bottom:6px;}
 
     <!-- CONSEIL DE LA SEMAINE
          ================================================================
-         👉 MODIFIER ICI CHAQUE SEMAINE (la SEULE chose à toucher).
-            Remplace le texte entre les balises <p> ci-dessous. C'est tout.
+         👉 Tu ne modifies PLUS ici. Le texte est lu depuis le fichier
+            "conseil.txt" (à la racine du site). Pour changer le conseil,
+            édite conseil.txt sur GitHub. La phrase ci-dessous ne sert que
+            de secours si conseil.txt n'est pas lisible.
          ================================================================ -->
     <div class="lsflix-tip">
       <p class="lab">💡 LE CONSEIL DE LA SEMAINE</p>
-      <p>Bouge 10 minutes dès le réveil, même en pyjama. Ton corps ne ment pas :
-         c'est la régularité, pas l'intensité, qui change tout sur la durée.</p>
+      <p id="lsflix-tip-text">Bouge 10 minutes dès le réveil, même en pyjama. Ton corps ne ment pas : c'est la régularité, pas l'intensité, qui change tout sur la durée.</p>
     </div>
     <!-- FIN CONSEIL -->
 
@@ -1357,7 +1358,7 @@ document.addEventListener('DOMContentLoaded', function(){
     { nom:"Cardio",        mots:["cardio","reggaeton","hiit","brûle","brule","saut","jump"] },
     { nom:"Renforcement",  mots:["abdos","cuisses","fessier","fessiers","renfo","gainage","bras","jambes","muscu"] },
     { nom:"Mobilité",      mots:["mobilité","mobilite","coordination","souplesse","étire","etire","stretch","fonctionnel"] },
-    { nom:"Danse",         mots:["hip hop","hip-hop","danse","kizomba","afro","reggaeton","groove","flow"] }
+    { nom:"Danse",         mots:["danse","chorégraphie","choregraphie"] }
   ];
 
   /* ---- SHORTS : détectés via "short" / "#shorts" dans le titre.
@@ -1370,6 +1371,7 @@ document.addEventListener('DOMContentLoaded', function(){
   function thumb(id){ return "https://i.ytimg.com/vi/"+id+"/hqdefault.jpg"; }
   function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;")
     .replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+  function dec(s){ var el=document.createElement("textarea"); el.innerHTML=String(s||""); return el.value; }
   function frDate(iso){ try{ return new Date(iso).toLocaleDateString("fr-FR",
     {day:"numeric",month:"long",year:"numeric"}); }catch(e){ return ""; } }
   function titreContient(titre,mots){
@@ -1384,7 +1386,7 @@ document.addEventListener('DOMContentLoaded', function(){
       var id="";
       if(it.guid && it.guid.indexOf("yt:video:")===0) id=it.guid.replace("yt:video:","");
       else { try{ id=new URL(it.link).searchParams.get("v")||""; }catch(e){} }
-      return { id:id, title:it.title||"", date:it.pubDate||"" };
+      return { id:id, title:dec(it.title||""), date:it.pubDate||"" };
     }).filter(function(x){ return x.id; });
   }
   /* ---- Normalisation depuis le XML brut (proxys de secours) ---- */
@@ -1397,7 +1399,7 @@ document.addEventListener('DOMContentLoaded', function(){
       var tEl=e.getElementsByTagName("title")[0];
       var pEl=e.getElementsByTagName("published")[0];
       var id=idEl?(idEl.textContent||"").trim():"";
-      if(id) out.push({ id:id, title:tEl?tEl.textContent:"", date:pEl?pEl.textContent:"" });
+      if(id) out.push({ id:id, title:tEl?dec(tEl.textContent):"", date:pEl?pEl.textContent:"" });
     }
     return out;
   }
@@ -1529,6 +1531,12 @@ document.addEventListener('DOMContentLoaded', function(){
   chargerVideos()
     .then(function(items){ if(items&&items.length) afficher(items); else afficherRepli(); })
     .catch(function(){ afficherRepli(); });
+
+  /* ---- Conseil de la semaine : lu depuis conseil.txt (modifiable tout seul) ---- */
+  fetch("conseil.txt?t="+Date.now())
+    .then(function(r){ if(!r.ok) throw new Error("no file"); return r.text(); })
+    .then(function(t){ t=(t||"").trim(); var el=document.getElementById("lsflix-tip-text"); if(t&&el) el.textContent=t; })
+    .catch(function(){});
 
 })();
 </script>
