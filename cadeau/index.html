@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ton cadeau — Longévité Sport</title>
+<meta property="og:title" content="Polito t'offre 1 an de Longévité Sport 🎁">
+<meta property="og:description" content="1 an gratuit, sans engagement. Ouvre depuis ton iPhone.">
+<meta property="og:image" content="polito.jpg">
+<style>
+  :root{
+    --magenta:#F4147E;
+    --rose:#FF5C8A;
+    --corail:#FF8A6B;
+    --nuit:#1B1B2E;
+    --nuit-soft:#26263f;
+    --orange:#FF7A2F;
+    --orange-clair:#FF9A4D;
+    --blanc:#FFFFFF;
+    --crayon:rgba(255,255,255,.72);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(160deg,var(--magenta) 0%,var(--rose) 42%,var(--corail) 100%);
+    background-attachment:fixed;
+    color:var(--nuit);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:24px 18px 40px;
+  }
+  .wrap{width:100%;max-width:440px}
+
+  /* En-tête : Polito + accroche */
+  .hero{text-align:center;padding:8px 0 20px;color:#fff}
+  .polito{
+    width:190px;height:auto;
+    filter:drop-shadow(0 12px 24px rgba(0,0,0,.28));
+    animation:pop .7s cubic-bezier(.18,.9,.32,1.4) both;
+  }
+  @keyframes pop{from{opacity:0;transform:translateY(18px) scale(.9)}to{opacity:1;transform:none}}
+  .kicker{
+    display:inline-block;margin-top:6px;
+    font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+    background:rgba(255,255,255,.22);padding:6px 14px;border-radius:999px;
+    backdrop-filter:blur(4px);
+  }
+  h1{
+    font-size:34px;line-height:1.08;font-weight:900;margin:14px 6px 6px;
+    text-shadow:0 3px 14px rgba(0,0,0,.22);
+  }
+  h1 .free{
+    display:block;
+    background:linear-gradient(90deg,#FFE7A3,#FFF);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-size:40px;
+  }
+  .sub{font-size:16px;color:rgba(255,255,255,.9);margin:6px 18px 0;font-weight:500}
+
+  /* Carte principale */
+  .card{
+    background:var(--blanc);
+    border-radius:26px;
+    padding:24px 22px 26px;
+    margin-top:24px;
+    box-shadow:0 20px 50px rgba(120,10,60,.28);
+  }
+
+  .promo-line{
+    display:flex;align-items:center;gap:10px;justify-content:center;
+    background:linear-gradient(90deg,#FFF0F5,#FFF6F0);
+    border:1.5px dashed var(--rose);
+    border-radius:16px;padding:14px;margin-bottom:22px;
+    font-weight:700;color:#C21E63;font-size:15px;text-align:center;
+  }
+  .promo-line b{color:var(--magenta)}
+
+  /* Étapes numérotées */
+  .step{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px}
+  .num{
+    flex:0 0 34px;height:34px;border-radius:50%;
+    background:linear-gradient(135deg,var(--magenta),var(--corail));
+    color:#fff;font-weight:900;font-size:16px;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 10px rgba(244,20,126,.35);
+  }
+  .step-body{flex:1;padding-top:2px}
+  .step-title{font-weight:800;font-size:16px;color:var(--nuit);margin-bottom:3px}
+  .step-desc{font-size:14px;color:#6b6b7d;line-height:1.4;margin-bottom:12px}
+
+  .btn{
+    display:block;text-align:center;text-decoration:none;
+    font-weight:800;font-size:17px;
+    padding:16px;border-radius:15px;
+    transition:transform .12s ease,box-shadow .12s ease;
+  }
+  .btn:active{transform:scale(.97)}
+  .btn-1{
+    background:var(--nuit);color:#fff;
+    box-shadow:0 6px 16px rgba(27,27,46,.3);
+  }
+  .btn-2{
+    background:linear-gradient(135deg,var(--orange),var(--orange-clair));
+    color:#fff;
+    box-shadow:0 6px 18px rgba(255,122,47,.45);
+  }
+
+  .divider{height:1px;background:#eee;margin:6px 0 18px}
+
+  /* Avertissement iPhone */
+  .warn{
+    display:flex;gap:10px;align-items:center;
+    background:#FFF8E6;border-radius:13px;padding:12px 14px;margin-top:20px;
+    font-size:13.5px;color:#8a6d1a;font-weight:600;line-height:1.35;
+  }
+  .warn .ico{font-size:20px;flex:0 0 auto}
+
+  /* Bloc secours */
+  details{
+    margin-top:16px;background:#F6F6FA;border-radius:13px;
+    padding:2px 4px;
+  }
+  summary{
+    cursor:pointer;padding:13px 12px;font-weight:700;font-size:14px;color:var(--nuit);
+    list-style:none;display:flex;justify-content:space-between;align-items:center;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-size:20px;color:var(--rose);font-weight:400}
+  details[open] summary::after{content:"−"}
+  .details-body{padding:0 12px 14px;font-size:13.5px;color:#5a5a6a;line-height:1.55}
+  .details-body b{color:var(--nuit)}
+  .code-pill{
+    display:inline-block;background:var(--nuit);color:#fff;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    padding:3px 10px;border-radius:7px;font-weight:700;letter-spacing:.05em;
+    font-size:13px;margin:0 2px;
+  }
+
+  footer{text-align:center;margin-top:24px;color:rgba(255,255,255,.85);font-size:14px;font-weight:600}
+  footer .sig{font-size:15px;font-weight:800;color:#fff;margin-top:2px}
+
+  @media(max-width:360px){
+    h1{font-size:29px}h1 .free{font-size:34px}
+    .polito{width:160px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .polito{animation:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <img class="polito" src="polito.jpg" alt="Polito, ton coach">
+    <div class="kicker">🎁 Cadeau de Polito</div>
+    <h1>Je t'offre<span class="free">1 an gratuit</span></h1>
+    <p class="sub">Longévité Sport — sport, mental &amp; bien-être. 10 min par jour changent tout.</p>
+  </div>
+
+  <div class="card">
+
+    <div class="promo-line">
+      <span>✨</span>
+      <span>Sans engagement · <b>ça s'arrête tout seul</b> au bout d'un an · zéro paiement</span>
+    </div>
+
+    <div class="step">
+      <div class="num">1</div>
+      <div class="step-body">
+        <div class="step-title">Télécharge l'app</div>
+        <div class="step-desc">Installe Longévité Sport sur ton iPhone.</div>
+        <a class="btn btn-1" href="https://apps.apple.com/fr/app/id6761455014">📲 Installer l'app</a>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">2</div>
+      <div class="step-body">
+        <div class="step-title">Active ton cadeau</div>
+        <div class="step-desc">Un tap, Face ID, et ton année gratuite est activée.</div>
+        <a class="btn btn-2" href="https://apps.apple.com/redeem?ctx=offercodes&id=6761455014&code=POLIFAM26">🎁 Activer 1 an gratuit</a>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="step" style="margin-bottom:0">
+      <div class="num" style="background:linear-gradient(135deg,#7C4DFF,#B388FF)">3</div>
+      <div class="step-body">
+        <div class="step-title">Crée ton compte</div>
+        <div class="step-desc">Ouvre l'app, inscris-toi, et c'est parti 💪</div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <span class="ico">📱</span>
+      <span>Ces boutons fonctionnent <b>uniquement depuis un iPhone</b>. Sur ordinateur, ça ne marchera pas.</span>
+    </div>
+
+    <details>
+      <summary>Un écran de prix s'affiche&nbsp;? 👇</summary>
+      <div class="details-body">
+        C'est normal, pas de panique&nbsp;! Après ton inscription, si l'app affiche les tarifs
+        (9,99&nbsp;€ / 79,99&nbsp;€), tape simplement sur <b>« Restaurer mes achats »</b> en bas
+        de l'écran. Ton année gratuite apparaît aussitôt.<br><br>
+        Si jamais on te demande un code à la main, c'est&nbsp;: <span class="code-pill">POLIFAM26</span>
+      </div>
+    </details>
+
+  </div>
+
+  <footer>
+    Un souci&nbsp;? Appelle-moi 😉
+    <div class="sig">— Polito</div>
+  </footer>
+
+</div>
+</body>
+</html>
